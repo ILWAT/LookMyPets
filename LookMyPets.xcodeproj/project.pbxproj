@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DE447F5F2B0E5E7200B6EB31 /* EmailUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE447F5E2B0E5E7200B6EB31 /* EmailUpViewController.swift */; };
+		DE99235D2B0E73C70048B705 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE99235C2B0E73C70048B705 /* LoginView.swift */; };
+		DE99235F2B0E77150048B705 /* Extension+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE99235E2B0E77150048B705 /* Extension+UIColor.swift */; };
+		DE99238E2B0F2CC60048B705 /* SecretKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE99238D2B0F2CC60048B705 /* SecretKeys.swift */; };
 		DEE81C6F2B0CDC660069AB2E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE81C6E2B0CDC660069AB2E /* AppDelegate.swift */; };
 		DEE81C712B0CDC670069AB2E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE81C702B0CDC670069AB2E /* SceneDelegate.swift */; };
 		DEE81C732B0CDC670069AB2E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE81C722B0CDC670069AB2E /* LoginViewController.swift */; };
@@ -29,6 +33,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DE447F5E2B0E5E7200B6EB31 /* EmailUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailUpViewController.swift; sourceTree = "<group>"; };
+		DE99235C2B0E73C70048B705 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		DE99235E2B0E77150048B705 /* Extension+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIColor.swift"; sourceTree = "<group>"; };
+		DE99238D2B0F2CC60048B705 /* SecretKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretKeys.swift; sourceTree = "<group>"; };
 		DEE81C6B2B0CDC660069AB2E /* LookMyPets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LookMyPets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEE81C6E2B0CDC660069AB2E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DEE81C702B0CDC670069AB2E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -63,6 +71,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DE447F5D2B0E571A00B6EB31 /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				DE447F5E2B0E5E7200B6EB31 /* EmailUpViewController.swift */,
+			);
+			path = SignUp;
+			sourceTree = "<group>";
+		};
 		DEE81C622B0CDC660069AB2E = {
 			isa = PBXGroup;
 			children = (
@@ -87,6 +103,7 @@
 				DEE81C832B0CDCD80069AB2E /* App */,
 				DEE81C822B0CDCD20069AB2E /* Scene */,
 				DEE81C7C2B0CDC690069AB2E /* Info.plist */,
+				DE99238D2B0F2CC60048B705 /* SecretKeys.swift */,
 			);
 			path = LookMyPets;
 			sourceTree = "<group>";
@@ -94,8 +111,10 @@
 		DEE81C822B0CDCD20069AB2E /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				DE447F5D2B0E571A00B6EB31 /* SignUp */,
 				DEE81C9F2B0CE1F20069AB2E /* Base */,
 				DEE81C722B0CDC670069AB2E /* LoginViewController.swift */,
+				DE99235C2B0E73C70048B705 /* LoginView.swift */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -131,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				DEE81CA52B0CE87A0069AB2E /* Extension+UIView.swift */,
+				DE99235E2B0E77150048B705 /* Extension+UIColor.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -225,11 +245,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				DEE81C732B0CDC670069AB2E /* LoginViewController.swift in Sources */,
+				DE447F5F2B0E5E7200B6EB31 /* EmailUpViewController.swift in Sources */,
+				DE99235F2B0E77150048B705 /* Extension+UIColor.swift in Sources */,
 				DEE81CA12B0CE2000069AB2E /* BaseViewController.swift in Sources */,
 				DEE81CA62B0CE87A0069AB2E /* Extension+UIView.swift in Sources */,
 				DEE81CA32B0CE2080069AB2E /* BaseView.swift in Sources */,
 				DEE81C6F2B0CDC660069AB2E /* AppDelegate.swift in Sources */,
+				DE99235D2B0E73C70048B705 /* LoginView.swift in Sources */,
 				DEE81C712B0CDC670069AB2E /* SceneDelegate.swift in Sources */,
+				DE99238E2B0F2CC60048B705 /* SecretKeys.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

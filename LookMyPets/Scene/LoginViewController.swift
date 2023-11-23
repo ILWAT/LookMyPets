@@ -11,69 +11,26 @@ import RxCocoa
 import RxSwift
 
 
-class LoginViewController: BaseViewController {
+final class LoginViewController: BaseViewController {
     //MARK: - Properties
+    let mainView = LoginView()
     
-    let idTextField = {
-        let view = UITextField()
-        view.borderStyle = .roundedRect
-        view.placeholder = "E-mail"
-        return view
-    }()
+    //MARK: - Rx Properties
+    let keyboardAction = PublishRelay<UIReturnKeyType>()
     
-    let pwTextField = {
-        let view = UITextField()
-        view.borderStyle = .roundedRect
-        view.placeholder = "PassWord"
-        return view
-    }()
+    let disposeBag = DisposeBag()
     
-    let loginButton = {
-        let view = UIButton()
-        view.setTitle("로그인", for: .normal)
-        var config = UIButton.Configuration.filled()
-        config.baseBackgroundColor = .green
-        config.baseForegroundColor = .white
-        config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ input in
-            var output = input
-            output.font = .boldSystemFont(ofSize: 20)
-            return output
-        })
-        config.cornerStyle = .capsule
-        view.configuration = config
-        return view
-    }()
-    
-    let signUpButton = {
-        let view = UIButton()
-        view.setTitle("회원가입", for: .normal)
-        var config = UIButton.Configuration.plain()
-        config.baseForegroundColor = .systemGray3
-        config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ input in
-            var outgoing = input
-            outgoing.font = UIFont.boldSystemFont(ofSize: 20)
-            return outgoing
-        })
-        view.configuration = config
-        return view
-    }()
-    
-    lazy var loginStackView = {
-        let view = UIStackView()
-        view.axis = .vertical
-        view.spacing = 10
-        view.distribution = .fillEqually
-        view.alignment = .fill
-        view.addArrangedSubview(idTextField)
-        view.addArrangedSubview(pwTextField)
-        return view
-    }()
+    //MARK: - LifeCycle
+    override func loadView() {
+        view = mainView
+    }
     
     //MARK: - Configure
     override func configure() {
-        self.view.backgroundColor = .systemBackground
-        self.view.addSubviews([loginStackView, loginButton, signUpButton])
-        setConstraints()
+        [mainView.idTextField, mainView.pwTextField].forEach { view in
+            view.delegate = self
+        }
+        
     }
     
     override func configureNavigation() {
@@ -81,32 +38,32 @@ class LoginViewController: BaseViewController {
     }
     
     override func bind() {
-        signUpButton.rx.tap
+        mainView.signUpButton.rx.tap
             .bind(with: self) { owner, _ in
-                <#code#>
+                let nextVC = EmailUpViewController()
+                owner.navigationController?.pushViewController(nextVC, animated: true)
             }
+            .disposed(by: disposeBag)
     }
-    
-    
-    
-    func setConstraints(){
-        let componentDefaultOffset = 10
-        loginStackView.snp.makeConstraints { make in
-            make.center.equalTo(view.safeAreaLayoutGuide)
-            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(60)
-        }
-        loginButton.snp.makeConstraints { make in
-            make.horizontalEdges.equalTo(loginStackView)
-            make.top.equalTo(loginStackView.snp.bottom).offset(componentDefaultOffset)
-            make.height.equalTo(50)
-        }
-        signUpButton.snp.makeConstraints { make in
-            make.top.equalTo(loginButton.snp.bottom).offset(componentDefaultOffset)
-            make.horizontalEdges.height.equalTo(loginButton)
-        }
-    }
-
 }
+
+
+extension LoginViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        switch textField.returnKeyType{
+        case .done:
+            textField.resignFirstResponder()
+        default:
+            if textField == mainView.idTextField{
+                mainView.pwTextField.becomeFirstResponder()
+            }
+        }
+        return true
+    }
+}
+
+
+
 
 
 //#Preview{
