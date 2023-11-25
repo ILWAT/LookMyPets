@@ -7,6 +7,10 @@
 
 import Foundation
 
-struct ValidationEmailModel: Decodable{
-    
+struct ValidationEmailResult: Decodable{
+    let message: String
+}
+
+struct ValidationEmail: Encodable{
+    let email: String
 }
