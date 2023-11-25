@@ -25,6 +25,7 @@ final class EmailUpViewController: BaseViewController{
             return outgoing
         })
         view.configuration = config
+        view.isEnabled = false
         return view
     }()
     
@@ -52,7 +53,7 @@ final class EmailUpViewController: BaseViewController{
         let view = UILabel()
         view.textColor = .red
         view.isHidden = true
-        view.text = "이미 사용중인 이메일입니다\n다른 이메일을 사용해주세요."
+        view.numberOfLines = 0
         return view
     }()
     
@@ -77,8 +78,9 @@ final class EmailUpViewController: BaseViewController{
     //MARK: - RxProperties
     let disposeBag = DisposeBag()
         
-    let validChecked = BehaviorRelay(value: false)
-    
+    let validChecked = PublishRelay<Bool>()
+    let errorMessageText = BehaviorRelay(value: "이미 사용중인 이메일입니다\n다른 이메일을 사용해주세요.")
+    let email = BehaviorSubject(value: "")
     
     
     //MARK: - Override
@@ -93,7 +95,58 @@ final class EmailUpViewController: BaseViewController{
     
     //MARK: - RxBind
     override func bind() {
+        validChecked
+            .asDriver(onErrorJustReturn: false)
+            .drive(with: self, onNext: { owner, bool in
+                owner.errorMessage.rx.isHidden.onNext(bool)
+                owner.nextButton.rx.isEnabled.onNext(bool)
+            })
+            .disposed(by: disposeBag)
         
+        errorMessageText
+            .asDriver()
+            .drive(with: self, onNext: { owner, value in
+                owner.errorMessage.text = value
+            })
+            .disposed(by: disposeBag)
+        
+        emailTextField
+            .rx.text.orEmpty
+            .asDriver()
+            .drive(with: self) { owner, string in
+                owner.email.onNext(string)
+            }
+            .disposed(by: disposeBag)
+        
+        
+        
+        checkValidButton
+            .rx.tap
+            .withLatestFrom(email)
+            .flatMapLatest({ email in
+                APIManger.shared.requestValidEmail(email: ValidationEmail(email: email))
+            })
+            .catch({ error in
+                return Observable<Result<ValidationEmailResult, Error>>.just(.failure(error))
+            })
+            .debug()
+            .subscribe(with: self, onNext: { owner, result in
+                switch result{
+                case .success(_):
+                    owner.validChecked.accept(true)
+                    
+                case .failure(let error):
+                    owner.validChecked.accept(false)
+                    if let commonError = error as? CommonError {
+                        print(commonError.errorMessage)
+                    } else if let fetchError = error as? FetchValidationEmailError {
+                        owner.errorMessageText.accept(fetchError.getMessage)
+                    } else {
+                        
+                    }
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     //MARK: - ConfigureView
