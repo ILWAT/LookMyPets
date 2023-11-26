@@ -62,23 +62,24 @@ final class APIManger {
                     print("success", response.statusCode)
                     do{
                         let decodedData = try JSONDecoder().decode(ValidationEmailResult.self, from: response.data)
-                        
-                        if let commonError = CommonError(rawValue: response.statusCode) {
-                            single(.success(.failure(commonError)))
-                        } else if let fetchError = FetchValidationEmailError(rawValue: response.statusCode) {
-                            single(.success(.failure(fetchError)))
-                        } else {
-                            single(.success(.success(decodedData)))
-                        }
-                        
+                        single(.success(.success(decodedData)))
                     } catch {
                         single(.failure(error))
                     }
                     
                 case .failure(let error):
-                    print("failure",error.response?.statusCode)
+                    let statusCode = error.response?.statusCode ?? 0
                     
-                    single(.failure(error))
+                    print("failure \(statusCode)")
+                
+                    if let commonError = CommonError(rawValue: statusCode) {
+                        single(.success(.failure(commonError)))
+                    } else if let fetchError = FetchValidationEmailError(rawValue: statusCode) {
+                        single(.success(.failure(fetchError)))
+                    } else {
+                        single(.failure(error))
+                    }
+                    
                 }
             }
             return Disposables.create()

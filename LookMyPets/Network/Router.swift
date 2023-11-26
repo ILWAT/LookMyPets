@@ -49,5 +49,12 @@ extension Router: TargetType {
         }
     }
     
+    var validationType: ValidationType {
+        switch self {
+        case .validation_Email:
+            return .customCodes([200])
+        }
+    }
+    
     
 }
