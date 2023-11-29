@@ -10,6 +10,10 @@
 		DE3AFF7C2B10DD0900C408C1 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = DE3AFF7B2B10DD0900C408C1 /* RxCocoa */; };
 		DE3AFF7E2B10DD0900C408C1 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = DE3AFF7D2B10DD0900C408C1 /* RxRelay */; };
 		DE3AFF802B10DD0900C408C1 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DE3AFF7F2B10DD0900C408C1 /* RxSwift */; };
+		DE3AFF902B14C3C300C408C1 /* PassWordSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3AFF8F2B14C3C300C408C1 /* PassWordSignUpViewController.swift */; };
+		DE3AFF922B14D5C700C408C1 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3AFF912B14D5C700C408C1 /* ViewModelType.swift */; };
+		DE3AFF962B14D6EB00C408C1 /* EmailUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3AFF952B14D6EB00C408C1 /* EmailUpViewModel.swift */; };
+		DE3AFFB32B170C2D00C408C1 /* PassWordSignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3AFFB22B170C2D00C408C1 /* PassWordSignUpViewModel.swift */; };
 		DE447F5F2B0E5E7200B6EB31 /* EmailUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE447F5E2B0E5E7200B6EB31 /* EmailUpViewController.swift */; };
 		DE99235D2B0E73C70048B705 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE99235C2B0E73C70048B705 /* LoginView.swift */; };
 		DE99235F2B0E77150048B705 /* Extension+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE99235E2B0E77150048B705 /* Extension+UIColor.swift */; };
@@ -33,6 +37,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DE3AFF8F2B14C3C300C408C1 /* PassWordSignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassWordSignUpViewController.swift; sourceTree = "<group>"; };
+		DE3AFF912B14D5C700C408C1 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
+		DE3AFF952B14D6EB00C408C1 /* EmailUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailUpViewModel.swift; sourceTree = "<group>"; };
+		DE3AFFB22B170C2D00C408C1 /* PassWordSignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassWordSignUpViewModel.swift; sourceTree = "<group>"; };
 		DE447F5E2B0E5E7200B6EB31 /* EmailUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailUpViewController.swift; sourceTree = "<group>"; };
 		DE99235C2B0E73C70048B705 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		DE99235E2B0E77150048B705 /* Extension+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIColor.swift"; sourceTree = "<group>"; };
@@ -71,10 +79,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DE3AFF932B14D6BD00C408C1 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				DE3AFF912B14D5C700C408C1 /* ViewModelType.swift */,
+				DE3AFF942B14D6DE00C408C1 /* SignUp */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		DE3AFF942B14D6DE00C408C1 /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				DE3AFF952B14D6EB00C408C1 /* EmailUpViewModel.swift */,
+				DE3AFFB22B170C2D00C408C1 /* PassWordSignUpViewModel.swift */,
+			);
+			path = SignUp;
+			sourceTree = "<group>";
+		};
 		DE447F5D2B0E571A00B6EB31 /* SignUp */ = {
 			isa = PBXGroup;
 			children = (
 				DE447F5E2B0E5E7200B6EB31 /* EmailUpViewController.swift */,
+				DE3AFF8F2B14C3C300C408C1 /* PassWordSignUpViewController.swift */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";
@@ -121,8 +148,9 @@
 				DEE81C842B0CDCDB0069AB2E /* Resources */,
 				DEE81C832B0CDCD80069AB2E /* App */,
 				DEE81C822B0CDCD20069AB2E /* Scene */,
-				DEE81C7C2B0CDC690069AB2E /* Info.plist */,
+				DE3AFF932B14D6BD00C408C1 /* ViewModel */,
 				DE99238D2B0F2CC60048B705 /* SecretKeys.swift */,
+				DEE81C7C2B0CDC690069AB2E /* Info.plist */,
 			);
 			path = LookMyPets;
 			sourceTree = "<group>";
@@ -261,13 +289,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				DE9923912B0F6B080048B705 /* Router.swift in Sources */,
+				DE3AFFB32B170C2D00C408C1 /* PassWordSignUpViewModel.swift in Sources */,
 				DEE81C732B0CDC670069AB2E /* LoginViewController.swift in Sources */,
 				DE9923962B0F78FE0048B705 /* APIManger.swift in Sources */,
 				DE447F5F2B0E5E7200B6EB31 /* EmailUpViewController.swift in Sources */,
 				DE99235F2B0E77150048B705 /* Extension+UIColor.swift in Sources */,
 				DEE81CA12B0CE2000069AB2E /* BaseViewController.swift in Sources */,
 				DE9923932B0F722B0048B705 /* ValidationEmailModel.swift in Sources */,
+				DE3AFF902B14C3C300C408C1 /* PassWordSignUpViewController.swift in Sources */,
+				DE3AFF922B14D5C700C408C1 /* ViewModelType.swift in Sources */,
 				DEE81CA62B0CE87A0069AB2E /* Extension+UIView.swift in Sources */,
+				DE3AFF962B14D6EB00C408C1 /* EmailUpViewModel.swift in Sources */,
 				DEE81CA32B0CE2080069AB2E /* BaseView.swift in Sources */,
 				DEE81C6F2B0CDC660069AB2E /* AppDelegate.swift in Sources */,
 				DE99235D2B0E73C70048B705 /* LoginView.swift in Sources */,
