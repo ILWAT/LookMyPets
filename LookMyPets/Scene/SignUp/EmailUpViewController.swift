@@ -10,10 +10,11 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
+
 final class EmailUpViewController: BaseViewController{
     //MARK: - Properties
     
-    let nextButton = {
+    private let nextButton = {
         let view = UIButton()
         view.setTitle("다음", for: .normal)
         var config = UIButton.Configuration.filled()
@@ -28,16 +29,17 @@ final class EmailUpViewController: BaseViewController{
         view.isEnabled = false
         return view
     }()
-    
-    let emailTextField = {
+
+    private let emailTextField = {
         let view = UITextField()
         view.borderStyle = .roundedRect
         view.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         view.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        view.clearButtonMode = .always
         return view
     }()
     
-    let checkValidButton = {
+    private let checkValidButton = {
         let view = UIButton()
         view.setTitle("중복 확인", for: .normal)
         var config = UIButton.Configuration.bordered()
@@ -49,7 +51,7 @@ final class EmailUpViewController: BaseViewController{
         return view
     }()
     
-    let errorMessage = {
+    private let errorMessage = {
         let view = UILabel()
         view.textColor = .red
         view.isHidden = true
@@ -57,7 +59,7 @@ final class EmailUpViewController: BaseViewController{
         return view
     }()
     
-    lazy var hStackView = {
+    private lazy var hStackView = {
         let view = UIStackView(arrangedSubviews: [emailTextField, checkValidButton])
         view.axis = .horizontal
         view.distribution = .fill
@@ -69,7 +71,7 @@ final class EmailUpViewController: BaseViewController{
     lazy var vStackView = {
         let view = UIStackView(arrangedSubviews: [hStackView, errorMessage])
         view.axis = .vertical
-        view.spacing = 0
+        view.spacing = 4
         view.alignment = .fill
         view.distribution = .equalSpacing
         return view
@@ -78,9 +80,7 @@ final class EmailUpViewController: BaseViewController{
     //MARK: - RxProperties
     let disposeBag = DisposeBag()
         
-    let validChecked = PublishRelay<Bool>()
-    let errorMessageText = BehaviorRelay(value: "이미 사용중인 이메일입니다\n다른 이메일을 사용해주세요.")
-    let email = BehaviorSubject(value: "")
+    let viewModel = EmailUpViewModel()
     
     
     //MARK: - Override
@@ -91,61 +91,43 @@ final class EmailUpViewController: BaseViewController{
     
     override func configureNavigation() {
         self.navigationItem.title = "회원가입 - E-mail"
+        self.navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     //MARK: - RxBind
     override func bind() {
-        validChecked
-            .asDriver(onErrorJustReturn: false)
+        let input = EmailUpViewModel.Input(
+            checkButtonTap: checkValidButton.rx.tap,
+            nextButtonTap: nextButton.rx.tap,
+            emailTextFieldText: emailTextField.rx.text.orEmpty
+        )
+        
+        let output = viewModel.transform(input)
+        
+        output.validChecked
             .drive(with: self, onNext: { owner, bool in
-                owner.errorMessage.rx.isHidden.onNext(bool)
                 owner.nextButton.rx.isEnabled.onNext(bool)
             })
             .disposed(by: disposeBag)
         
-        errorMessageText
-            .asDriver()
+        output.isHiddenError
+            .drive(with: self) { owner, bool in
+                owner.errorMessage.rx.isHidden.onNext(bool)
+            }
+            .disposed(by: disposeBag)
+        
+        output.errorMessageText
             .drive(with: self, onNext: { owner, value in
                 owner.errorMessage.text = value
             })
             .disposed(by: disposeBag)
+    
         
-        emailTextField
-            .rx.text.orEmpty
-            .asDriver()
-            .drive(with: self) { owner, string in
-                owner.email.onNext(string)
+        output.nextButtonTap
+            .bind(with: self) { owner, _ in
+                print("pushViewController")
+                owner.navigationController?.pushViewController(PassWordSignUpViewController(), animated: true)
             }
-            .disposed(by: disposeBag)
-        
-        
-        
-        checkValidButton
-            .rx.tap
-            .withLatestFrom(email)
-            .flatMapLatest({ email in
-                APIManger.shared.requestValidEmail(email: ValidationEmail(email: email))
-            })
-            .catch({ error in
-                return Observable<Result<ValidationEmailResult, Error>>.just(.failure(error))
-            })
-            .debug()
-            .subscribe(with: self, onNext: { owner, result in
-                switch result{
-                case .success(_):
-                    owner.validChecked.accept(true)
-                    
-                case .failure(let error):
-                    owner.validChecked.accept(false)
-                    if let commonError = error as? CommonError {
-                        print(commonError.errorMessage)
-                    } else if let fetchError = error as? FetchValidationEmailError {
-                        owner.errorMessageText.accept(fetchError.getMessage)
-                    } else {
-                        
-                    }
-                }
-            })
             .disposed(by: disposeBag)
     }
     
@@ -166,7 +148,6 @@ final class EmailUpViewController: BaseViewController{
         vStackView.snp.makeConstraints { make in
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(10)
             make.center.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(100)
         }
     }
     
