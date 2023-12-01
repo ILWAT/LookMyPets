@@ -14,22 +14,6 @@ import RxCocoa
 final class EmailUpViewController: BaseViewController{
     //MARK: - Properties
     
-    private let nextButton = {
-        let view = UIButton()
-        view.setTitle("다음", for: .normal)
-        var config = UIButton.Configuration.filled()
-        config.baseBackgroundColor = .mainTintColor
-        config.baseForegroundColor = .white
-        config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ incoming in
-            var outgoing = incoming
-            outgoing.font = .boldSystemFont(ofSize: 20)
-            return outgoing
-        })
-        view.configuration = config
-        view.isEnabled = false
-        return view
-    }()
-
     private let emailTextField = {
         let view = UITextField()
         view.borderStyle = .roundedRect
@@ -76,6 +60,9 @@ final class EmailUpViewController: BaseViewController{
         view.distribution = .equalSpacing
         return view
     }()
+    
+    private let nextButton = NextButton(title: "다음")
+
     
     //MARK: - RxProperties
     let disposeBag = DisposeBag()
