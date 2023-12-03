@@ -6,3 +6,17 @@
 //
 
 import Foundation
+
+struct signupResult: Decodable {
+    let _id: String
+    let email: String
+    let nick: String
+}
+
+struct SignupBodyModel: Encodable{
+    let email: String
+    let password: String
+    let nickname: String
+    let phoneNumber: String?
+    let birthday: String?
+}
