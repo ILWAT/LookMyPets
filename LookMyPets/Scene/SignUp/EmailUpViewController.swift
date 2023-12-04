@@ -113,7 +113,9 @@ final class EmailUpViewController: BaseViewController{
         output.nextButtonTap
             .bind(with: self) { owner, _ in
                 print("pushViewController")
-                owner.navigationController?.pushViewController(PassWordSignUpViewController(), animated: true)
+                let nextVC = PassWordSignUpViewController()
+                nextVC.passingSignupData(email: self.emailTextField.text ?? "")
+                owner.navigationController?.pushViewController(nextVC, animated: true)
             }
             .disposed(by: disposeBag)
     }

@@ -20,6 +20,8 @@ final class PassWordSignUpViewController: BaseViewController {
         return view
     }()
     
+    private let originPWGuideLabel = GuideLabel(frame: .zero, text: "")
+    
     private let checkPWTextField = {
         let view = UITextField()
         view.isSecureTextEntry = true
@@ -28,21 +30,7 @@ final class PassWordSignUpViewController: BaseViewController {
         return view
     }()
     
-    private let originPWGuideLabel = {
-        let view = UILabel()
-        view.isHidden = true
-        view.textColor = .red
-        view.font = .systemFont(ofSize: 15)
-        return view
-    }()
-    
-    private let checkPWGuideLabel = {
-        let view = UILabel()
-        view.isHidden = true
-        view.textColor = .red
-        view.font = .systemFont(ofSize: 15)
-        return view
-    }()
+    private let checkPWGuideLabel = GuideLabel(frame: .zero, text: "")
     
     private lazy var stackView = {
         let view = UIStackView(arrangedSubviews: [originPWTextField, originPWGuideLabel, checkPWTextField, checkPWGuideLabel])
@@ -53,26 +41,16 @@ final class PassWordSignUpViewController: BaseViewController {
         return view
     }()
     
-    private let nextButton = {
-        let view = UIButton()
-        view.setTitle("다음", for: .normal)
-        var config = UIButton.Configuration.filled()
-        config.baseBackgroundColor = .mainTintColor
-        config.baseForegroundColor = .white
-        config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ incoming in
-            var outgoing = incoming
-            outgoing.font = .boldSystemFont(ofSize: 20)
-            return outgoing
-        })
-        view.configuration = config
-        view.isEnabled = false
-        return view
-    }()
+    private let nextButton = NextButton(title: "다음")
+    
     //MARK: - RXProperties
     
-    let viewModel = PassWordSignUpViewModel()
+    private let viewModel = PassWordSignUpViewModel()
     
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
+    
+    //MARK: - Properties
+    lazy var email: String = ""
     
     //MARK: - Override
     override func configure() {
@@ -129,10 +107,17 @@ final class PassWordSignUpViewController: BaseViewController {
         
         output.nextBtnTap
             .bind(with: self) { owner, _ in
-                self.navigationController?.pushViewController(UIViewController(), animated: true)
+                let nextVC = UserInfoUpViewController(email: self.email, password: self.originPWTextField.text ?? "")
+                
+                self.navigationController?.pushViewController(nextVC, animated: true)
             }
             .disposed(by: disposeBag)
         
+    }
+    
+    //MARK: - Helper
+    func passingSignupData(email: String){
+        self.email = email
     }
     
     //MARK: - View
