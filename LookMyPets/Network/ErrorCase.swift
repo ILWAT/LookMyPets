@@ -45,4 +45,13 @@ enum FetchValidationEmailError: Int,  Error {
 enum FetchSignupError: Int, Error {
     case existUser = 409
     case noneBody = 400
+    
+    var getMessage: String {
+        switch self {
+        case .existUser:
+            return "이미 가입되어 있는 회원입니다."
+        case .noneBody:
+            return "필수 값이 제대로 입력되었는지 확인해주세요."
+        }
+    }
 }

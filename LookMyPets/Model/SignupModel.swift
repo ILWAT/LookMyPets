@@ -16,7 +16,7 @@ struct signupResult: Decodable {
 struct SignupBodyModel: Encodable{
     let email: String
     let password: String
-    let nickname: String
-    let phoneNumber: String?
-    let birthday: String?
+    let nick: String
+    let phoneNum: String?
+    let birthDay: String?
 }
