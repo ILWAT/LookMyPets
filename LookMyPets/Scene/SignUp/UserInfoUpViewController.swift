@@ -63,13 +63,30 @@ final class UserInfoUpViewController: BaseViewController{
     
     private let nextButton = NextButton(title: "회원가입 완료하기")
     
+    private let datePickerVC = DatePickerViewController()
+    
     //MARK: - RXProperties
+    private let viewModel = UserInfoUpViewModel()
     
-    let viewModel = UserInfoUpViewModel()
     
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     //MARK: - Properties
+    let email: String
+    let password: String
+    private lazy var birthdayString: String = ""
+    
+    
+    //MARK: - init
+    init(email: String, password: String){
+        self.email = email
+        self.password = password
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     
     //MARK: - Override
@@ -86,21 +103,57 @@ final class UserInfoUpViewController: BaseViewController{
         let input = UserInfoUpViewModel.Input(
             nickName: nicknameVStack.textField.rx.text.orEmpty,
             phoneNumber: phoneNumberVStack.textField.rx.text.orEmpty,
-            birthdayTap: birthDayButton.rx.tap
+            birthdayTap: birthDayButton.rx.tap,
+            birthday: datePickerVC.date,
+            nextButtonTap: nextButton.rx.tap,
+            email: self.email,
+            password: self.password
         )
         
         let output = viewModel.transform(input)
         
         output.birthDayTap
             .bind(with: self) { owner, _ in
-                let datePickerVC = DatePickerViewController()
-                if let sheet = datePickerVC.sheetPresentationController {
+                if let sheet = owner.datePickerVC.sheetPresentationController {
                     sheet.detents = [.medium()]
                     sheet.prefersGrabberVisible = true
                 }
-                self.present(datePickerVC, animated: true)
+
+                owner.present(owner.datePickerVC, animated: true)
             }
             .disposed(by: disposeBag)
+        
+        output.birthdayDriver
+            .drive(with: self) { owner, date in
+                owner.birthDayButton.setTitle(date.formatted(date: .numeric, time: .omitted), for: .normal)
+            }
+            .disposed(by: disposeBag)
+        
+        output.isValid
+            .drive(with: self) { owner, bool in
+                owner.nextButton.rx.isEnabled.onNext(bool)
+            }
+            .disposed(by: disposeBag)
+        
+        output.isSuccess
+            .filter({ $0 })
+            .drive(with: self) { owner, bool in
+                owner.navigationController?.pushViewController(SignUpCompletionViewController(), animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        output.isSuccess
+            .filter({ !$0 })
+            .withLatestFrom(output.failReason)
+            .drive(with: self) { owner, string in
+                owner.makeDefaultAlert(alertTitle: "회원 가입 불가", alertMessage: string, okTitle: "로그인으로 이동") { [weak owner] action in
+                    owner?.navigationController?.popToRootViewController(animated: true)
+                } cancelAction: { _ in }
+            }
+            .disposed(by: disposeBag)
+        
+        
+            
     }
     
     //MARK: - View
@@ -115,7 +168,7 @@ final class UserInfoUpViewController: BaseViewController{
     private func setConstraints() {
         let componentOffset = 10
         scrollView.snp.makeConstraints { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
+            make.horizontalEdges.top.equalTo(view.safeAreaLayoutGuide)
             make.bottom.equalTo(nextButton.snp.top)
         }
         contentView.snp.makeConstraints { make in
@@ -154,6 +207,3 @@ final class UserInfoUpViewController: BaseViewController{
     }
 }
 
-#Preview {
-    UserInfoUpViewController()
-}
