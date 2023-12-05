@@ -20,7 +20,7 @@ final class APIManger {
     private init() {}
     
     //MARK: - requestFunction
-    func requestValidEmail(email: ValidationEmail) -> Single<Result<ValidationEmailResult, Error>> {
+    func requestValidEmail(email: ValidationEmailBodyModel) -> Single<Result<ValidationEmailResult, Error>> {
         
         return Single.create { single -> Disposable in
             self.provider.request(.validation_Email(email: email)) { result in
@@ -55,14 +55,14 @@ final class APIManger {
         }
     }
     
-    func reqeustJoin(signupData: SignupBodyModel) -> Single<Result<signupResult, Error>> {
-        return Single<Result<signupResult, Error>>.create { (single) -> Disposable in
+    func reqeustJoin(signupData: SignupBodyModel) -> Single<Result<SignupResult, Error>> {
+        return Single<Result<SignupResult, Error>>.create { (single) -> Disposable in
             self.provider.request(.signup(signupData: signupData)) { result in
                 switch result {
                 case .success(let response):
                     print("success", response.statusCode)
                     do{
-                        let decodedData = try JSONDecoder().decode(signupResult.self, from: response.data)
+                        let decodedData = try JSONDecoder().decode(SignupResult.self, from: response.data)
                         single(.success(.success(decodedData)))
                     } catch {
                         single(.failure(error))
@@ -82,6 +82,35 @@ final class APIManger {
                     
                 }
                 
+            }
+            return Disposables.create()
+        }
+    }
+    
+    func requestJSONPost<D: Decodable>(requestType: Router, decodableType: D.Type) -> Single<Result<D,Error>> {
+        return Single.create { single -> Disposable in
+            self.provider.request(requestType) { result in
+                switch result{
+                case .success(let response):
+                    print("success", response.statusCode)
+                    do{
+                        let decodedData = try JSONDecoder().decode(decodableType, from: response.data)
+                        single(.success(.success(decodedData)))
+                    } catch (let error) {
+                        single(.success(.failure(error)))
+                    }
+                    
+                case .failure(let error):
+                    let statusCode = error.response?.statusCode ?? 0
+                    
+                    print("failure \(statusCode)")
+                    
+                    if let error = requestType.emitError(statusCode: statusCode) {
+                        single(.success(.failure(error)))
+                    } else {
+                        single(.success(.failure(error)))
+                    }
+                }
             }
             return Disposables.create()
         }

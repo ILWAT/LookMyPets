@@ -8,12 +8,28 @@
 import Foundation
 import Moya
 
-enum Router {
-    case validation_Email(email: ValidationEmail)
-    case signup(signupData: SignupBodyModel)
+protocol DecodableTargetType {
+    var resultModel: Decodable.Type { get }
 }
 
-extension Router: TargetType {
+enum Router {
+    case validation_Email(email: ValidationEmailBodyModel)
+    case signup(signupData: SignupBodyModel)
+    case login(loginBody: LoginBodyModel)
+}
+
+
+//MARK: - Protocols
+extension Router: TargetType, AccessTokenAuthorizable, DecodableTargetType {
+    var authorizationType: Moya.AuthorizationType? {
+        switch self {
+        case .validation_Email, .signup, .login:
+            return .bearer
+        default:
+            return nil
+        }
+    }
+    
     var baseURL: URL {
         URL(string: SecretKeys.SeSAC_ServerBaseURL)!
     }
@@ -24,12 +40,14 @@ extension Router: TargetType {
             return "/validation/email"
         case .signup:
             return "/join"
+        case .login:
+            return "/login"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .validation_Email, .signup:
+        case .validation_Email, .signup, .login:
             return .post
         }
     }
@@ -40,13 +58,15 @@ extension Router: TargetType {
             return .requestJSONEncodable(email)
         case .signup(let joinData):
             return .requestJSONEncodable(joinData)
+        case .login(let loginBody):
+            return .requestJSONEncodable(loginBody)
         }
         
     }
     
     var headers: [String : String]? {
         switch self {
-        case .validation_Email, .signup:
+        case .validation_Email, .signup, .login:
             [
                 "Content-Type": "application/json",
                 "SesacKey": SecretKeys.SeSAC_ServerKey
@@ -56,8 +76,36 @@ extension Router: TargetType {
     
     var validationType: ValidationType {
         switch self {
-        case .validation_Email, .signup:
+        case .validation_Email, .signup, .login:
             return .customCodes([200])
+        }
+    }
+    
+    //MARK: - Custom
+    
+    var resultModel: Decodable.Type {
+        switch self {
+        case .validation_Email:
+            return ValidationEmailResult.self
+        case .signup:
+            return SignupResult.self
+        case .login:
+            return LoginResult.self
+        }
+    }
+    
+    func emitError(statusCode: Int) -> Error? {
+        if let error = CommonError(rawValue: statusCode){
+            return error
+        } else {
+            switch self {
+            case .validation_Email:
+                return FetchValidationEmailError(rawValue: statusCode)
+            case .signup:
+                return FetchSignupError(rawValue: statusCode)
+            case .login:
+                return FetchLoginError(rawValue: statusCode)
+            }
         }
     }
     

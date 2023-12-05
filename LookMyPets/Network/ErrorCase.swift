@@ -7,7 +7,11 @@
 
 import Foundation
 
-enum CommonError: Int, Error {
+protocol ErrorMessagesProtocol {
+    var errorMessage: String { get }
+}
+
+enum CommonError: Int, Error, ErrorMessagesProtocol {
     case noneSeSACKey = 420
     case overRequest = 429
     case notExistURL = 444
@@ -27,11 +31,11 @@ enum CommonError: Int, Error {
     }
 }
 
-enum FetchValidationEmailError: Int,  Error {
+enum FetchValidationEmailError: Int,  Error, ErrorMessagesProtocol  {
     case noneBody = 400
     case notInvalid = 409
     
-    var getMessage: String{
+    var errorMessage: String{
         switch self {
         case .noneBody:
             return "필수 입력값이 없습니다."
@@ -42,16 +46,30 @@ enum FetchValidationEmailError: Int,  Error {
 }
 
 
-enum FetchSignupError: Int, Error {
+enum FetchSignupError: Int, Error, ErrorMessagesProtocol  {
     case existUser = 409
     case noneBody = 400
     
-    var getMessage: String {
+    var errorMessage: String {
         switch self {
         case .existUser:
             return "이미 가입되어 있는 회원입니다."
         case .noneBody:
             return "필수 값이 제대로 입력되었는지 확인해주세요."
+        }
+    }
+}
+
+enum FetchLoginError: Int, Error, ErrorMessagesProtocol  {
+    case noneBody = 400
+    case checkAccount = 401
+    
+    var errorMessage: String {
+        switch self {
+        case .noneBody:
+            return "필수 값을 채워주세요."
+        case .checkAccount:
+            return "계정을 확인해주세요."
         }
     }
 }
