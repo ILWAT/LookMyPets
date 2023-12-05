@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct signupResult: Decodable {
+struct SignupResult: Decodable {
     let _id: String
     let email: String
     let nick: String

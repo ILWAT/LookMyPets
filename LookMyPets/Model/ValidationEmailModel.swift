@@ -11,6 +11,6 @@ struct ValidationEmailResult: Decodable{
     let message: String
 }
 
-struct ValidationEmail: Encodable{
+struct ValidationEmailBodyModel: Encodable{
     let email: String
 }
