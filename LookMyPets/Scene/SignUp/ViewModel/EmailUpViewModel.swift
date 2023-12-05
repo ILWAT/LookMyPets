@@ -80,7 +80,7 @@ final class EmailUpViewModel: ViewModelType {
                 (self?.isValidEmail(email) ?? false)
             })
             .flatMapLatest({ email in
-                APIManger.shared.requestValidEmail(email: ValidationEmail(email: email))
+                APIManger.shared.requestValidEmail(email: ValidationEmailBodyModel(email: email))
             })
             .catch({ error in
                 return Observable<Result<ValidationEmailResult, Error>>.just(.failure(error))
@@ -100,7 +100,7 @@ final class EmailUpViewModel: ViewModelType {
                         errorMessageText.accept(commonError.errorMessage)
                         print(commonError.errorMessage)
                     } else if let fetchError = error as? FetchValidationEmailError {
-                        errorMessageText.accept(fetchError.getMessage)
+                        errorMessageText.accept(fetchError.errorMessage)
                     } else {
                         errorMessageText.accept("알 수 없는 에러가 발생했습니다.")
                     }

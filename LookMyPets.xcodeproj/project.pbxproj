@@ -45,6 +45,8 @@
 		DEF1D3842B1DD98B00CDE246 /* Extension+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF1D3832B1DD98B00CDE246 /* Extension+UIViewController.swift */; };
 		DEF1D3862B1DDF8C00CDE246 /* SignUpCompletionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF1D3852B1DDF8C00CDE246 /* SignUpCompletionViewController.swift */; };
 		DEF1D3882B1DE59700CDE246 /* CapsuleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF1D3872B1DE59700CDE246 /* CapsuleButton.swift */; };
+		DEF1D38A2B1E36BD00CDE246 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF1D3892B1E36BD00CDE246 /* LoginModel.swift */; };
+		DEF1D38C2B1F1B7E00CDE246 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF1D38B2B1F1B7E00CDE246 /* LoginViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +82,8 @@
 		DEF1D3832B1DD98B00CDE246 /* Extension+UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIViewController.swift"; sourceTree = "<group>"; };
 		DEF1D3852B1DDF8C00CDE246 /* SignUpCompletionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCompletionViewController.swift; sourceTree = "<group>"; };
 		DEF1D3872B1DE59700CDE246 /* CapsuleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleButton.swift; sourceTree = "<group>"; };
+		DEF1D3892B1E36BD00CDE246 /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
+		DEF1D38B2B1F1B7E00CDE246 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +137,7 @@
 		DE3AFFEA2B18644600C408C1 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				DEF1D38D2B1F53B500CDE246 /* ViewModel */,
 				DEE81C722B0CDC670069AB2E /* LoginViewController.swift */,
 				DE99235C2B0E73C70048B705 /* LoginView.swift */,
 			);
@@ -167,6 +172,7 @@
 			children = (
 				DE9923922B0F722B0048B705 /* ValidationEmailModel.swift */,
 				DE3AFFF32B18AD5E00C408C1 /* SignupModel.swift */,
+				DEF1D3892B1E36BD00CDE246 /* LoginModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -249,6 +255,14 @@
 				DEF1D3832B1DD98B00CDE246 /* Extension+UIViewController.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		DEF1D38D2B1F53B500CDE246 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				DEF1D38B2B1F1B7E00CDE246 /* LoginViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -345,6 +359,7 @@
 				DE9923962B0F78FE0048B705 /* APIManger.swift in Sources */,
 				DE447F5F2B0E5E7200B6EB31 /* EmailUpViewController.swift in Sources */,
 				DEF1D3882B1DE59700CDE246 /* CapsuleButton.swift in Sources */,
+				DEF1D38C2B1F1B7E00CDE246 /* LoginViewModel.swift in Sources */,
 				DE3AFFEC2B1864A600C408C1 /* GuideLabel.swift in Sources */,
 				DEF1D3842B1DD98B00CDE246 /* Extension+UIViewController.swift in Sources */,
 				DE99235F2B0E77150048B705 /* Extension+UIColor.swift in Sources */,
@@ -360,6 +375,7 @@
 				DE3AFF962B14D6EB00C408C1 /* EmailUpViewModel.swift in Sources */,
 				DEE81CA32B0CE2080069AB2E /* BaseView.swift in Sources */,
 				DEE81C6F2B0CDC660069AB2E /* AppDelegate.swift in Sources */,
+				DEF1D38A2B1E36BD00CDE246 /* LoginModel.swift in Sources */,
 				DE3AFFF02B186A5800C408C1 /* GuideTextFieldVStack.swift in Sources */,
 				DE99235D2B0E73C70048B705 /* LoginView.swift in Sources */,
 				DE3AFFF42B18AD5E00C408C1 /* SignupModel.swift in Sources */,
