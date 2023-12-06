@@ -47,6 +47,7 @@
 		DEF1D3882B1DE59700CDE246 /* CapsuleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF1D3872B1DE59700CDE246 /* CapsuleButton.swift */; };
 		DEF1D38A2B1E36BD00CDE246 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF1D3892B1E36BD00CDE246 /* LoginModel.swift */; };
 		DEF1D38C2B1F1B7E00CDE246 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF1D38B2B1F1B7E00CDE246 /* LoginViewModel.swift */; };
+		DEF1D38F2B2055F500CDE246 /* KeyChainManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF1D38E2B2055F400CDE246 /* KeyChainManger.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -84,6 +85,7 @@
 		DEF1D3872B1DE59700CDE246 /* CapsuleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleButton.swift; sourceTree = "<group>"; };
 		DEF1D3892B1E36BD00CDE246 /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
 		DEF1D38B2B1F1B7E00CDE246 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		DEF1D38E2B2055F400CDE246 /* KeyChainManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainManger.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +165,7 @@
 				DE9923902B0F6B080048B705 /* Router.swift */,
 				DE9923952B0F78FE0048B705 /* APIManger.swift */,
 				DE3AFFF52B18BDD800C408C1 /* ErrorCase.swift */,
+				DEF1D38E2B2055F400CDE246 /* KeyChainManger.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -359,6 +362,7 @@
 				DE9923962B0F78FE0048B705 /* APIManger.swift in Sources */,
 				DE447F5F2B0E5E7200B6EB31 /* EmailUpViewController.swift in Sources */,
 				DEF1D3882B1DE59700CDE246 /* CapsuleButton.swift in Sources */,
+				DEF1D38F2B2055F500CDE246 /* KeyChainManger.swift in Sources */,
 				DEF1D38C2B1F1B7E00CDE246 /* LoginViewModel.swift in Sources */,
 				DE3AFFEC2B1864A600C408C1 /* GuideLabel.swift in Sources */,
 				DEF1D3842B1DD98B00CDE246 /* Extension+UIViewController.swift in Sources */,
