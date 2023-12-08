@@ -36,41 +36,40 @@ final class TokenManger {
     private init(){}
     
     //MARK: - Using UserDefaults
-    func addTokenToUserDefaults(tokenType: JWTokenType, account: String, tokenValue: String) {
+    func addTokenToUserDefaults(tokenType: JWTokenType, tokenValue: String) {
         switch tokenType {
         case .accessToken:
-            token.$accessToken = account
             token.accessToken = tokenValue
         case .refreshToken:
-            token.$refreshToken = account
             token.refreshToken = tokenValue
         }
     }
     
-    func deleteTokenInUserDefaults(tokenType: JWTokenType, account: String){
+    func deleteTokenInUserDefaults(tokenType: JWTokenType){
         switch tokenType {
         case .accessToken:
-            token.$accessToken = account
             token.accessToken = nil
         case .refreshToken:
-            token.$refreshToken = account
             token.refreshToken = nil
         }
     }
     
-    func readCurrnetTokenInUserDefaults(tokenType: JWTokenType, account: String) -> String?{
+    func readCurrentTokenInUserDefaults(tokenType: JWTokenType) -> String?{
         switch tokenType {
         case .accessToken:
-            token.$accessToken = account
             return token.accessToken
         case .refreshToken:
-            token.$refreshToken = account
             return token.refreshToken
         }
     }
     
     func currentAccount() -> String {
         return self.token.$accessToken
+    }
+    
+    func changeAccount(account: String){
+        self.token.$accessToken = account
+        self.token.$refreshToken = account
     }
     
     //MARK: - Using Keychain
