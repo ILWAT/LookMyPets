@@ -54,9 +54,18 @@ final class LoginViewModel: ViewModelType {
             .subscribe(with: self) { owner, result in
                 switch result{
                 case .success(let responseResult):
-                    print(responseResult)
+                    TokenManger.shared.changeAccount(account: responseResult._id)
+                    
+                    TokenManger.shared.addTokenToUserDefaults(
+                        tokenType: .accessToken,
+                        tokenValue: responseResult.token)
+                    
+                    TokenManger.shared.addTokenToUserDefaults(
+                        tokenType: .refreshToken,
+                        tokenValue: responseResult.refreshToken)
+                    
                 case .failure(let error):
-                    if let error = error as? FetchLoginError {
+                    if let error = error as? ErrorCase.FetchLoginError {
                         errorMessage.accept(error.errorMessage)
                     }
                 }
