@@ -8,6 +8,7 @@
 import Foundation
 
 struct LoginResult: Decodable{
+    let _id: String
     let token: String
     let refreshToken: String
 }
