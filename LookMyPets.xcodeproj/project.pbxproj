@@ -47,7 +47,10 @@
 		DEF1D3882B1DE59700CDE246 /* CapsuleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF1D3872B1DE59700CDE246 /* CapsuleButton.swift */; };
 		DEF1D38A2B1E36BD00CDE246 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF1D3892B1E36BD00CDE246 /* LoginModel.swift */; };
 		DEF1D38C2B1F1B7E00CDE246 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF1D38B2B1F1B7E00CDE246 /* LoginViewModel.swift */; };
-		DEF1D38F2B2055F500CDE246 /* KeyChainManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF1D38E2B2055F400CDE246 /* KeyChainManger.swift */; };
+		DEF1D38F2B2055F500CDE246 /* TokenManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF1D38E2B2055F400CDE246 /* TokenManger.swift */; };
+		DEF1D3942B21881E00CDE246 /* UserDefaultsWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF1D3932B21881E00CDE246 /* UserDefaultsWrapper.swift */; };
+		DEF1D3982B21CD1F00CDE246 /* TokenAuthPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF1D3972B21CD1F00CDE246 /* TokenAuthPlugin.swift */; };
+		DEF1D39A2B21E1F900CDE246 /* RefreshModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF1D3992B21E1F900CDE246 /* RefreshModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -85,7 +88,10 @@
 		DEF1D3872B1DE59700CDE246 /* CapsuleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleButton.swift; sourceTree = "<group>"; };
 		DEF1D3892B1E36BD00CDE246 /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
 		DEF1D38B2B1F1B7E00CDE246 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
-		DEF1D38E2B2055F400CDE246 /* KeyChainManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainManger.swift; sourceTree = "<group>"; };
+		DEF1D38E2B2055F400CDE246 /* TokenManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManger.swift; sourceTree = "<group>"; };
+		DEF1D3932B21881E00CDE246 /* UserDefaultsWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsWrapper.swift; sourceTree = "<group>"; };
+		DEF1D3972B21CD1F00CDE246 /* TokenAuthPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAuthPlugin.swift; sourceTree = "<group>"; };
+		DEF1D3992B21E1F900CDE246 /* RefreshModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,7 +171,8 @@
 				DE9923902B0F6B080048B705 /* Router.swift */,
 				DE9923952B0F78FE0048B705 /* APIManger.swift */,
 				DE3AFFF52B18BDD800C408C1 /* ErrorCase.swift */,
-				DEF1D38E2B2055F400CDE246 /* KeyChainManger.swift */,
+				DEF1D38E2B2055F400CDE246 /* TokenManger.swift */,
+				DEF1D3972B21CD1F00CDE246 /* TokenAuthPlugin.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -176,6 +183,7 @@
 				DE9923922B0F722B0048B705 /* ValidationEmailModel.swift */,
 				DE3AFFF32B18AD5E00C408C1 /* SignupModel.swift */,
 				DEF1D3892B1E36BD00CDE246 /* LoginModel.swift */,
+				DEF1D3992B21E1F900CDE246 /* RefreshModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -199,7 +207,7 @@
 		DEE81C6D2B0CDC660069AB2E /* LookMyPets */ = {
 			isa = PBXGroup;
 			children = (
-				DE3AFFE72B18620200C408C1 /* CustomView */,
+				DEF1D3922B21881000CDE246 /* Helper */,
 				DE9923942B0F76A80048B705 /* Model */,
 				DE99238F2B0F6A680048B705 /* Network */,
 				DEE81CA42B0CE8650069AB2E /* Extension */,
@@ -216,6 +224,7 @@
 		DEE81C822B0CDCD20069AB2E /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				DE3AFFE72B18620200C408C1 /* CustomView */,
 				DE3AFFEA2B18644600C408C1 /* Login */,
 				DE447F5D2B0E571A00B6EB31 /* SignUp */,
 				DEE81C9F2B0CE1F20069AB2E /* Base */,
@@ -266,6 +275,14 @@
 				DEF1D38B2B1F1B7E00CDE246 /* LoginViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		DEF1D3922B21881000CDE246 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				DEF1D3932B21881E00CDE246 /* UserDefaultsWrapper.swift */,
+			);
+			path = Helper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -360,12 +377,14 @@
 				DE3AFFB32B170C2D00C408C1 /* PassWordSignUpViewModel.swift in Sources */,
 				DEE81C732B0CDC670069AB2E /* LoginViewController.swift in Sources */,
 				DE9923962B0F78FE0048B705 /* APIManger.swift in Sources */,
+				DEF1D3982B21CD1F00CDE246 /* TokenAuthPlugin.swift in Sources */,
 				DE447F5F2B0E5E7200B6EB31 /* EmailUpViewController.swift in Sources */,
 				DEF1D3882B1DE59700CDE246 /* CapsuleButton.swift in Sources */,
-				DEF1D38F2B2055F500CDE246 /* KeyChainManger.swift in Sources */,
+				DEF1D38F2B2055F500CDE246 /* TokenManger.swift in Sources */,
 				DEF1D38C2B1F1B7E00CDE246 /* LoginViewModel.swift in Sources */,
 				DE3AFFEC2B1864A600C408C1 /* GuideLabel.swift in Sources */,
 				DEF1D3842B1DD98B00CDE246 /* Extension+UIViewController.swift in Sources */,
+				DEF1D3942B21881E00CDE246 /* UserDefaultsWrapper.swift in Sources */,
 				DE99235F2B0E77150048B705 /* Extension+UIColor.swift in Sources */,
 				DEF1D3862B1DDF8C00CDE246 /* SignUpCompletionViewController.swift in Sources */,
 				DE3AFFF62B18BDD800C408C1 /* ErrorCase.swift in Sources */,
@@ -377,6 +396,7 @@
 				DE3AFFEE2B1865C300C408C1 /* NextButton.swift in Sources */,
 				DEE81CA62B0CE87A0069AB2E /* Extension+UIView.swift in Sources */,
 				DE3AFF962B14D6EB00C408C1 /* EmailUpViewModel.swift in Sources */,
+				DEF1D39A2B21E1F900CDE246 /* RefreshModel.swift in Sources */,
 				DEE81CA32B0CE2080069AB2E /* BaseView.swift in Sources */,
 				DEE81C6F2B0CDC660069AB2E /* AppDelegate.swift in Sources */,
 				DEF1D38A2B1E36BD00CDE246 /* LoginModel.swift in Sources */,

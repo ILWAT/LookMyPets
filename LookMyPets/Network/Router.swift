@@ -8,27 +8,21 @@
 import Foundation
 import Moya
 
-protocol DecodableTargetType {
+protocol catchErrorTargetType: TargetType {
     var resultModel: Decodable.Type { get }
+    var needsToken: Bool { get }
 }
 
 enum Router {
     case validation_Email(email: ValidationEmailBodyModel)
     case signup(signupData: SignupBodyModel)
     case login(loginBody: LoginBodyModel)
+    case refresh(refreshToken: String)
 }
 
 
 //MARK: - Protocols
-extension Router: TargetType, AccessTokenAuthorizable, DecodableTargetType {
-    var authorizationType: Moya.AuthorizationType? {
-        switch self {
-        case .validation_Email, .signup, .login:
-            return .bearer
-        default:
-            return nil
-        }
-    }
+extension Router: catchErrorTargetType {
     
     var baseURL: URL {
         URL(string: SecretKeys.SeSAC_ServerBaseURL)!
@@ -42,6 +36,8 @@ extension Router: TargetType, AccessTokenAuthorizable, DecodableTargetType {
             return "/join"
         case .login:
             return "/login"
+        case .refresh:
+            return "/refresh"
         }
     }
     
@@ -49,6 +45,8 @@ extension Router: TargetType, AccessTokenAuthorizable, DecodableTargetType {
         switch self {
         case .validation_Email, .signup, .login:
             return .post
+        case .refresh:
+            return .get
         }
     }
     
@@ -60,6 +58,8 @@ extension Router: TargetType, AccessTokenAuthorizable, DecodableTargetType {
             return .requestJSONEncodable(joinData)
         case .login(let loginBody):
             return .requestJSONEncodable(loginBody)
+        case .refresh:
+            return .requestPlain
         }
         
     }
@@ -71,17 +71,23 @@ extension Router: TargetType, AccessTokenAuthorizable, DecodableTargetType {
                 "Content-Type": "application/json",
                 "SesacKey": SecretKeys.SeSAC_ServerKey
             ]
+        case .refresh(let refreshToken):
+            [
+                "Content-Type": "application/json",
+                "SesacKey": SecretKeys.SeSAC_ServerKey,
+                "Authorization": refreshToken
+            ]
         }
     }
     
     var validationType: ValidationType {
         switch self {
-        case .validation_Email, .signup, .login:
-            return .customCodes([200])
+        case .validation_Email, .signup, .login, .refresh:
+            return .successCodes
         }
     }
     
-    //MARK: - Custom
+    //MARK: - Custom TargetType
     
     var resultModel: Decodable.Type {
         switch self {
@@ -91,20 +97,33 @@ extension Router: TargetType, AccessTokenAuthorizable, DecodableTargetType {
             return SignupResult.self
         case .login:
             return LoginResult.self
+        case .refresh:
+            return RefreshResult.self
+        }
+    }
+    
+    var needsToken: Bool {
+        switch self {
+        case .login, .signup, .validation_Email, .refresh:
+            return false
+        default :
+            return true
         }
     }
     
     func emitError(statusCode: Int) -> Error? {
-        if let error = CommonError(rawValue: statusCode){
+        if let error = ErrorCase.CommonError(rawValue: statusCode){
             return error
         } else {
             switch self {
             case .validation_Email:
-                return FetchValidationEmailError(rawValue: statusCode)
+                return ErrorCase.FetchValidationEmailError(rawValue: statusCode)
             case .signup:
-                return FetchSignupError(rawValue: statusCode)
+                return ErrorCase.FetchSignupError(rawValue: statusCode)
             case .login:
-                return FetchLoginError(rawValue: statusCode)
+                return ErrorCase.FetchLoginError(rawValue: statusCode)
+            case .refresh:
+                return ErrorCase.fetchRefreshError(rawValue: statusCode)
             }
         }
     }
