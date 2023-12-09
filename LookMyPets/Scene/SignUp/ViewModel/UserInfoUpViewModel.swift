@@ -111,10 +111,10 @@ final class UserInfoUpViewModel: ViewModelType {
                     isSuccess.accept(true)
                 case .failure(let error):
                     isSuccess.accept(false)
-                    if let error = error as? CommonError {
+                    if let error = error as? ErrorCase.CommonError {
                         print(error.errorMessage)
                         failReason.accept(error.errorMessage)
-                    } else if let error = error as? FetchSignupError{
+                    } else if let error = error as? ErrorCase.FetchSignupError{
                         print(error)
                         failReason.accept(error.errorMessage)
                     } else {

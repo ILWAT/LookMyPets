@@ -12,6 +12,17 @@ protocol ErrorMessagesProtocol: Error {
 }
 
 enum ErrorCase{
+    enum LocalError: ErrorMessagesProtocol{
+        case decodeError
+        
+        var errorMessage: String {
+            switch self{
+            case .decodeError:
+                return "Decoding Error"
+            }
+        }
+    }
+    
     enum CommonError: Int, ErrorMessagesProtocol {
         case noneSeSACKey = 420
         case overRequest = 429
