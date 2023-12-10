@@ -22,12 +22,14 @@ final class LoginViewModel: ViewModelType {
     struct Output{
         let errorMessage: Driver<String>
         let signupTap: ControlEvent<Void>
+        let presentHome: Driver<Bool>
     }
     
     func transform(_ input: Input) -> Output {
         let email = BehaviorRelay(value: "")
         let password = BehaviorRelay(value: "")
         let errorMessage = PublishRelay<String>()
+        let presentHome = BehaviorRelay(value: false)
         
         input.id
             .bind(with: self) { owner, emailText in
@@ -64,6 +66,8 @@ final class LoginViewModel: ViewModelType {
                         tokenType: .refreshToken,
                         tokenValue: responseResult.refreshToken)
                     
+                    presentHome.accept(true)
+                    
                 case .failure(let error):
                     if let error = error as? ErrorCase.FetchLoginError {
                         errorMessage.accept(error.errorMessage)
@@ -75,7 +79,8 @@ final class LoginViewModel: ViewModelType {
         
         return Output(
             errorMessage: errorMessage.asDriver(onErrorJustReturn: "알 수 없는 오류가 발생했습니다."),
-            signupTap: input.signupTap
+            signupTap: input.signupTap,
+            presentHome: presentHome.asDriver()
         )
     }
 }

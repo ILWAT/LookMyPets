@@ -27,6 +27,10 @@ final class LoginViewController: BaseViewController {
         view = mainView
     }
     
+    deinit{
+        print("deinit - LoginViewController")
+    }
+    
     //MARK: - Configure
     override func configure() {
         [mainView.idTextField.textField, mainView.pwTextField].forEach { view in
@@ -57,6 +61,12 @@ final class LoginViewController: BaseViewController {
             .drive(with: self) { owner, errorText in
                 owner.mainView.idTextField.guideMessage.text = errorText
                 owner.mainView.idTextField.guideMessage.isHidden = false
+            }
+            .disposed(by: disposeBag)
+        
+        output.presentHome
+            .drive(with: self) { owner, bool in
+                owner.view.window?.rootViewController = MainTabBarController()
             }
             .disposed(by: disposeBag)
     }
