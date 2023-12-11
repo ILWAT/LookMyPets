@@ -105,6 +105,26 @@ enum ErrorCase{
             }
         }
     }
+    
+    enum getPostError: Int, ErrorMessagesProtocol {
+        case wrongRequest = 400
+        case notValidToken = 401
+        case forbidden = 403
+        case expireToken = 419
+        
+        var errorMessage: String {
+            switch self {
+            case .wrongRequest:
+                return "잘못된 요청입니다"
+            case .notValidToken:
+                return "인증할 수 없는 액세스 토큰입니다."
+            case .forbidden:
+                return "접근 권한이 없습니다."
+            case .expireToken:
+                return "액세스 토큰이 만료되었습니다."
+            }
+        }
+    }
 }
 
 

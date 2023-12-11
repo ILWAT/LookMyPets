@@ -18,6 +18,8 @@ enum Router {
     case signup(signupData: SignupBodyModel)
     case login(loginBody: LoginBodyModel)
     case refresh(refreshToken: String)
+    case getPost(getPostData: GetPostBodyModel)
+    case postPost
 }
 
 
@@ -38,14 +40,16 @@ extension Router: catchErrorTargetType {
             return "/login"
         case .refresh:
             return "/refresh"
+        case .getPost, .postPost:
+            return "/post"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .validation_Email, .signup, .login:
+        case .validation_Email, .signup, .login, .postPost:
             return .post
-        case .refresh:
+        case .refresh, .getPost:
             return .get
         }
     }
@@ -60,13 +64,17 @@ extension Router: catchErrorTargetType {
             return .requestJSONEncodable(loginBody)
         case .refresh:
             return .requestPlain
+        case .getPost(let getPostBody):
+            return .requestJSONEncodable(getPostBody)
+        case .postPost:
+            return .requestPlain
         }
         
     }
     
     var headers: [String : String]? {
         switch self {
-        case .validation_Email, .signup, .login:
+        case .validation_Email, .signup, .login, .postPost, .getPost:
             [
                 "Content-Type": "application/json",
                 "SesacKey": SecretKeys.SeSAC_ServerKey
@@ -82,7 +90,7 @@ extension Router: catchErrorTargetType {
     
     var validationType: ValidationType {
         switch self {
-        case .validation_Email, .signup, .login, .refresh:
+        case .validation_Email, .signup, .login, .refresh, .getPost, .postPost:
             return .successCodes
         }
     }
@@ -99,6 +107,10 @@ extension Router: catchErrorTargetType {
             return LoginResult.self
         case .refresh:
             return RefreshResult.self
+        case .getPost:
+            return GetPostResultModel.self
+        case .postPost:
+            return GetPostResultModel.self
         }
     }
     
@@ -124,6 +136,10 @@ extension Router: catchErrorTargetType {
                 return ErrorCase.FetchLoginError(rawValue: statusCode)
             case .refresh:
                 return ErrorCase.fetchRefreshError(rawValue: statusCode)
+            case .getPost:
+                return ErrorCase.getPostError(rawValue: statusCode)
+            case .postPost:
+                return nil
             }
         }
     }
