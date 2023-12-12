@@ -20,6 +20,7 @@ enum Router {
     case refresh(refreshToken: String)
     case getPost(getPostData: GetPostBodyModel)
     case postPost
+    case content
 }
 
 
@@ -27,7 +28,7 @@ enum Router {
 extension Router: catchErrorTargetType {
     
     var baseURL: URL {
-        URL(string: SecretKeys.SeSAC_ServerBaseURL)!
+        URL(string: SecretKeys.SeSAC_AuthTestURL)!
     }
     
     var path: String {
@@ -42,6 +43,8 @@ extension Router: catchErrorTargetType {
             return "/refresh"
         case .getPost, .postPost:
             return "/post"
+        case .content:
+            return "/content"
         }
     }
     
@@ -49,7 +52,7 @@ extension Router: catchErrorTargetType {
         switch self {
         case .validation_Email, .signup, .login, .postPost:
             return .post
-        case .refresh, .getPost:
+        default: //.refresh, .getPost, .content,
             return .get
         }
     }
@@ -68,13 +71,15 @@ extension Router: catchErrorTargetType {
             return .requestJSONEncodable(getPostBody)
         case .postPost:
             return .requestPlain
+        case .content:
+            return .requestPlain
         }
         
     }
     
     var headers: [String : String]? {
         switch self {
-        case .validation_Email, .signup, .login, .postPost, .getPost:
+        case .validation_Email, .signup, .login, .postPost, .getPost, .content:
             [
                 "Content-Type": "application/json",
                 "SesacKey": SecretKeys.SeSAC_ServerKey
@@ -83,14 +88,14 @@ extension Router: catchErrorTargetType {
             [
                 "Content-Type": "application/json",
                 "SesacKey": SecretKeys.SeSAC_ServerKey,
-                "Authorization": refreshToken
+                "Refresh": refreshToken
             ]
         }
     }
     
     var validationType: ValidationType {
         switch self {
-        case .validation_Email, .signup, .login, .refresh, .getPost, .postPost:
+        case .validation_Email, .signup, .login, .refresh, .getPost, .postPost, .content:
             return .successCodes
         }
     }
@@ -111,12 +116,14 @@ extension Router: catchErrorTargetType {
             return GetPostResultModel.self
         case .postPost:
             return GetPostResultModel.self
+        case .content:
+            return contentResultModel.self
         }
     }
     
     var needsToken: Bool {
         switch self {
-        case .login, .signup, .validation_Email, .refresh:
+        case .login, .signup, .validation_Email:
             return false
         default :
             return true
@@ -140,6 +147,8 @@ extension Router: catchErrorTargetType {
                 return ErrorCase.getPostError(rawValue: statusCode)
             case .postPost:
                 return nil
+            case .content:
+                return ErrorCase.ContentTestError(rawValue: statusCode)
             }
         }
     }

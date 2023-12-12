@@ -14,13 +14,15 @@ import RxCocoa
 final class APIManger {
     //MARK: - Properties
     static let shared = APIManger()
+    var bag = DisposeBag()
     
     let provider = MoyaProvider<Router>(plugins: [TokenAuthPlugin(
         tokenClosure: {
             TokenManger.shared.readCurrentTokenInUserDefaults(tokenType: .accessToken)
         }
     )])
-
+    
+    
     //MARK: - initialize
     private init() {}
     
@@ -126,10 +128,14 @@ final class APIManger {
     func requestByRx<D: Decodable>(requestType: Router, resultModel: D.Type) -> Single<Result<D,Error>> {
         return Single.create { single in
             self.provider.rx.request(requestType)
+                .debug()
                 .catch({ error in //토큰 만료의 에러라면 토큰을 재발급 받아야 함
+
                     guard let moyaError = error as? MoyaError,
                           let statusCode = moyaError.response?.statusCode,
-                          statusCode == 419 else { return Single.error(error) }
+                          statusCode == 419 else {
+                        return Single.error(error)
+                    }
                     
                     return Single.create{ refreshSingle in
                         self.provider.request(.refresh(refreshToken: TokenManger.shared.readCurrentTokenInUserDefaults(tokenType: .refreshToken) ?? "")){ result in
@@ -138,6 +144,7 @@ final class APIManger {
                                 do {
                                     let decodedData = try JSONDecoder().decode(RefreshResult.self, from: response.data)
                                     TokenManger.shared.addTokenToUserDefaults(tokenType: .accessToken, tokenValue: decodedData.token)
+                                    print("refresh access Token:\(decodedData)")
                                     return refreshSingle(.failure(error))
                                 } catch {
                                     return refreshSingle(.failure(ErrorCase.LocalError.decodeError))
@@ -150,18 +157,26 @@ final class APIManger {
                     }
                 })
                 .retry(3)
+                .debug()
                 .subscribe(with: self) { owner, response  in
                     do{
+                        print(response.data)
                         let decodedData = try response.map(resultModel)
+                        print(decodedData)
                         single(.success(.success(decodedData)))
                     } catch let error {
+                        print("api error", error)
                         single(.success(.failure(error)))
                     }
                    
                 } onFailure: { owner, error in
+                    print("Error")
                     single(.success(.failure(error)))
+                } onDisposed: { owner in
+                    print("dispose")
                 }
                 .dispose()
+//                .disposed(by: self.bag)
             
             return Disposables.create()
         }
