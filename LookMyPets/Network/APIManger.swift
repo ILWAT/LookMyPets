@@ -124,7 +124,11 @@ final class APIManger {
     }
     
     
-    
+    /// Rx + Moya를 활용한 API request 메서드
+    /// 인자로 넣은 resultModel의 형태로 Single을 return
+    /// 기존 request 요청 419(토큰만료) 에러시, token 재발급  요청  후, 2번 재시도(retry)
+    /// 만약 기존 reqeust 419 + refreshToken request 418시, Single Error Emit
+    /// refresh 자동화, 고려사항 x  but error는 그대로 방출
     func requestByRx<D: Decodable>(requestType: Router, resultModel: D.Type) -> Single<Result<D,Error>> {
         return Single.create { single in
             self.provider.rx.request(requestType)
@@ -171,12 +175,16 @@ final class APIManger {
                    
                 } onFailure: { owner, error in
                     print("Error")
-                    single(.success(.failure(error)))
-                } onDisposed: { owner in
-                    print("dispose")
+                    guard let moyaError = error as? MoyaError,
+                          let statusCode = moyaError.response?.statusCode,
+                          statusCode == 418 else {
+                        return single(.success(.failure(error)))
+                    }
+                    //AccessToken 만료 + RefreshToken 만료시, SingleError를 emit
+                    single(.failure(error))
                 }
-                .dispose()
-//                .disposed(by: self.bag)
+//                .dispose()
+                .disposed(by: self.bag)
             
             return Disposables.create()
         }
