@@ -10,6 +10,7 @@ import RxCocoa
 import RxSwift
 import SnapKit
 
+
 final class MainHomeViewController: BaseViewController{
     //MARK: - Properties
     let viewModel = MainHomeViewModel()
@@ -20,12 +21,9 @@ final class MainHomeViewController: BaseViewController{
     //MARK: - UIVProperties
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: configureCollectionViewLayout()).then { view in
         view.register(PostCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: PostCollectionViewCell.self))
+        view.delegate = self
     }
-    
-    let testButton = UIButton().then { button in
-        button.setTitle("tokenTest", for: .normal)
-        button.backgroundColor = .blue
-    }
+
     
     //MARK: - LifeCycle
     override func configure() {
@@ -38,25 +36,33 @@ final class MainHomeViewController: BaseViewController{
     }
     
     override func bind() {
-        let input = MainHomeViewModel.Input(tap: testButton.rx.tap)
+        let input = MainHomeViewModel.Input(
+            collectionView: collectionView.rx
+        )
         
         let output = viewModel.transform(input)
+        
+        output.postCellData
+            .drive(collectionView.rx.items) { (collectionView, row, element) in
+                let indexPath = IndexPath(row: row, section: 0)
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PostCollectionViewCell.self), for: indexPath) as! PostCollectionViewCell
+                cell.configurePostCellComponent(getPostData: element)
+                return cell
+            }
+            .disposed(by: disposeBag)
     }
     //MARK: - UI Configuration
     private func configureHierarchy(){
         self.view.backgroundColor = .systemBackground
-//        self.view.addSubview(collectionView)
-        self.view.addSubview(testButton)
+        self.view.addSubview(collectionView)
     }
     
     private func configureConstraints(){
-//        collectionView.snp.makeConstraints { make in
-//            make.edges.equalTo(self.view.safeAreaLayoutGuide)
-//        }
-        
-        testButton.snp.makeConstraints { make in
-            make.center.equalTo(self.view.safeAreaLayoutGuide)
+        collectionView.snp.makeConstraints { make in
+            make.edges.equalTo(self.view.safeAreaLayoutGuide)
         }
+        
+        
     }
     
     //MARK: - Helper
@@ -65,9 +71,14 @@ final class MainHomeViewController: BaseViewController{
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 10
         layout.minimumInteritemSpacing = 10
+        layout.estimatedItemSize = CGSize(width: UserDefaults.standard.double(forKey: "ScreenWidth"), height:UserDefaults.standard.double(forKey: "ScreenWidth"))
         return layout
     }
     
 }
 
+
+extension MainHomeViewController: UICollectionViewDelegate {
+    
+}
 
