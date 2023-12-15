@@ -21,6 +21,7 @@ enum Router {
     case getPost(getPostData: GetPostBodyModel)
     case postPost
     case content
+    case imageLoad(imagePath: String)
 }
 
 
@@ -45,6 +46,8 @@ extension Router: catchErrorTargetType {
             return "/post"
         case .content:
             return "/content"
+        case .imageLoad(let imagePath):
+            return "/uploads/posts/\(imagePath)"
         }
     }
     
@@ -65,13 +68,12 @@ extension Router: catchErrorTargetType {
             return .requestJSONEncodable(joinData)
         case .login(let loginBody):
             return .requestJSONEncodable(loginBody)
-        case .refresh:
-            return .requestPlain
         case .getPost(let getPostBody):
-            return .requestJSONEncodable(getPostBody)
-        case .postPost:
-            return .requestPlain
-        case .content:
+            return .requestParameters(parameters: ["next": getPostBody.next ?? "",
+                                                   "limit": getPostBody.limit ?? "",
+                                                   "product_id": getPostBody.product_id ?? ""],
+                                      encoding: URLEncoding.queryString)
+        default: //postPost, content, refresh
             return .requestPlain
         }
         
@@ -79,23 +81,23 @@ extension Router: catchErrorTargetType {
     
     var headers: [String : String]? {
         switch self {
-        case .validation_Email, .signup, .login, .postPost, .getPost, .content:
-            [
-                "Content-Type": "application/json",
-                "SesacKey": SecretKeys.SeSAC_ServerKey
-            ]
         case .refresh(let refreshToken):
             [
                 "Content-Type": "application/json",
                 "SesacKey": SecretKeys.SeSAC_ServerKey,
                 "Refresh": refreshToken
             ]
+        default://case .validation_Email, .signup, .login, .postPost, .getPost, .content:
+            [
+                "Content-Type": "application/json",
+                "SesacKey": SecretKeys.SeSAC_ServerKey
+            ]
         }
     }
     
     var validationType: ValidationType {
         switch self {
-        case .validation_Email, .signup, .login, .refresh, .getPost, .postPost, .content:
+        default: //.validation_Email, .signup, .login, .refresh, .getPost, .postPost, .content
             return .successCodes
         }
     }
@@ -117,6 +119,8 @@ extension Router: catchErrorTargetType {
         case .postPost:
             return GetPostResultModel.self
         case .content:
+            return contentResultModel.self
+        case .imageLoad:
             return contentResultModel.self
         }
     }
@@ -149,6 +153,8 @@ extension Router: catchErrorTargetType {
                 return nil
             case .content:
                 return ErrorCase.ContentTestError(rawValue: statusCode)
+            default:
+                return ErrorCase.CommonError(rawValue: statusCode)
             }
         }
     }

@@ -125,6 +125,23 @@ enum ErrorCase{
             }
         }
     }
+    
+    enum ContentTestError: Int, ErrorMessagesProtocol {
+        case unValidToken = 401
+        case Forbidden = 403
+        case expireToekn = 419
+        
+        var errorMessage: String {
+            switch self {
+            case .unValidToken:
+                return "인증할 수 없는 토큰"
+            case .Forbidden:
+                return "forbidden"
+            case .expireToekn:
+                return "액세스 토큰 만료"
+            }
+        }
+    }
 }
 
 

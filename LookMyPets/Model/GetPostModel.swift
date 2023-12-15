@@ -27,8 +27,9 @@ struct GetPostData: Decodable {
     let comments: [CommentData]
     let time: String
     let _id: String
-    let creator: [CreatorInfo]
+    let creator: CreatorInfo
     let content: String
+    let content1: String?
     let product_id: String
 }
 
@@ -36,11 +37,16 @@ struct CommentData: Decodable {
     let _id: String
     let content: String
     let time: String
-    let creator: [CreatorInfo]
+    let creator: CreatorInfo
 }
 
 struct CreatorInfo: Decodable {
     let _id: String
     let nick: String
-    let profile: String
+    let profile: String?
+}
+
+
+struct contentResultModel: Decodable {
+    let message: String
 }
