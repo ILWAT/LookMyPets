@@ -56,15 +56,17 @@ final class LoginViewModel: ViewModelType {
             .subscribe(with: self) { owner, result in
                 switch result{
                 case .success(let responseResult):
-                    TokenManger.shared.changeAccount(account: responseResult._id)
-                    
-                    TokenManger.shared.addTokenToUserDefaults(
-                        tokenType: .accessToken,
-                        tokenValue: responseResult.token)
-                    
-                    TokenManger.shared.addTokenToUserDefaults(
-                        tokenType: .refreshToken,
-                        tokenValue: responseResult.refreshToken)
+                    DispatchQueue.global().async {
+                        TokenManger.shared.changeAccount(account: responseResult._id)
+                        
+                        TokenManger.shared.addTokenToUserDefaults(
+                            tokenType: .accessToken,
+                            tokenValue: responseResult.token)
+                        
+                        TokenManger.shared.addTokenToUserDefaults(
+                            tokenType: .refreshToken,
+                            tokenValue: responseResult.refreshToken)
+                    }
                     
                     presentHome.accept(true)
                     

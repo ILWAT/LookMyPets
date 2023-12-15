@@ -65,8 +65,14 @@ final class LoginViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         output.presentHome
+            .filter({ $0 })
             .drive(with: self) { owner, bool in
-                owner.view.window?.rootViewController = MainTabBarController()
+                guard let currentWindow = owner.view.window else {return}
+                let transitionVC = MainTabBarController()
+                
+                currentWindow.rootViewController = transitionVC
+                UIView.transition(with: currentWindow, duration: 0.5, options: [.transitionCrossDissolve], animations: nil, completion: nil)
+                
             }
             .disposed(by: disposeBag)
     }
