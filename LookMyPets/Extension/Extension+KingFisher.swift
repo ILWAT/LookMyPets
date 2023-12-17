@@ -26,7 +26,8 @@ extension KingfisherWrapper where Base: UIImageView {
             return r
         }
         
-        let newOptions: KingfisherOptionsInfo = options ?? [.requestModifier(modifier)]
+        var newOptions: KingfisherOptionsInfo = options ?? []
+        newOptions.append(.requestModifier(modifier))
         
         self.setImage(
             with: resource,
