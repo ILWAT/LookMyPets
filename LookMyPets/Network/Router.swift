@@ -29,7 +29,7 @@ enum Router {
 extension Router: catchErrorTargetType {
     
     var baseURL: URL {
-        URL(string: SecretKeys.SeSAC_AuthTestURL)!
+        URL(string: SecretKeys.SeSAC_ServerBaseURL)!
     }
     
     var path: String {
