@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DE15BEEE2B264F56003800A3 /* PostImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15BEED2B264F56003800A3 /* PostImageCollectionViewCell.swift */; };
+		DE15BEF02B266742003800A3 /* GetPostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15BEEF2B266742003800A3 /* GetPostModel.swift */; };
+		DE15BEFC2B2772C2003800A3 /* PostProductID.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15BEFB2B2772C2003800A3 /* PostProductID.swift */; };
 		DE3A00182B1A0EEE00C408C1 /* DatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3A00172B1A0EEE00C408C1 /* DatePickerViewController.swift */; };
 		DE3AFF7C2B10DD0900C408C1 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = DE3AFF7B2B10DD0900C408C1 /* RxCocoa */; };
 		DE3AFF7E2B10DD0900C408C1 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = DE3AFF7D2B10DD0900C408C1 /* RxRelay */; };
@@ -23,6 +26,8 @@
 		DE3AFFF42B18AD5E00C408C1 /* SignupModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3AFFF32B18AD5E00C408C1 /* SignupModel.swift */; };
 		DE3AFFF62B18BDD800C408C1 /* ErrorCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3AFFF52B18BDD800C408C1 /* ErrorCase.swift */; };
 		DE447F5F2B0E5E7200B6EB31 /* EmailUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE447F5E2B0E5E7200B6EB31 /* EmailUpViewController.swift */; };
+		DE7F217C2B2B8BF00016EA0F /* Extension+KingFisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7F217B2B2B8BF00016EA0F /* Extension+KingFisher.swift */; };
+		DE9044712B3022BC009AB4CA /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = DE9044702B3022BC009AB4CA /* Toast */; };
 		DE99235D2B0E73C70048B705 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE99235C2B0E73C70048B705 /* LoginView.swift */; };
 		DE99235F2B0E77150048B705 /* Extension+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE99235E2B0E77150048B705 /* Extension+UIColor.swift */; };
 		DE99238E2B0F2CC60048B705 /* SecretKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE99238D2B0F2CC60048B705 /* SecretKeys.swift */; };
@@ -50,10 +55,20 @@
 		DEF1D38F2B2055F500CDE246 /* TokenManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF1D38E2B2055F400CDE246 /* TokenManger.swift */; };
 		DEF1D3942B21881E00CDE246 /* UserDefaultsWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF1D3932B21881E00CDE246 /* UserDefaultsWrapper.swift */; };
 		DEF1D3982B21CD1F00CDE246 /* TokenAuthPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF1D3972B21CD1F00CDE246 /* TokenAuthPlugin.swift */; };
-		DEF1D39A2B21E1F900CDE246 /* RefreshModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF1D3992B21E1F900CDE246 /* RefreshModel.swift */; };
+		DEF1D39A2B21E1F900CDE246 /* RefreshResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF1D3992B21E1F900CDE246 /* RefreshResult.swift */; };
+		DEF1D3D32B24C11A00CDE246 /* MainHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF1D3D22B24C11A00CDE246 /* MainHomeViewController.swift */; };
+		DEF1D3D62B24C12A00CDE246 /* MainHomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF1D3D52B24C12A00CDE246 /* MainHomeViewModel.swift */; };
+		DEF1D3DB2B24D6D800CDE246 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF1D3DA2B24D6D800CDE246 /* MainTabBarController.swift */; };
+		DEF1D3DE2B24E05E00CDE246 /* Differentiator in Frameworks */ = {isa = PBXBuildFile; productRef = DEF1D3DD2B24E05E00CDE246 /* Differentiator */; };
+		DEF1D3E02B24E05E00CDE246 /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = DEF1D3DF2B24E05E00CDE246 /* RxDataSources */; };
+		DEF1D3E32B24E46F00CDE246 /* PostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF1D3E22B24E46F00CDE246 /* PostCollectionViewCell.swift */; };
+		DEF1D3E62B24EBF000CDE246 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = DEF1D3E52B24EBF000CDE246 /* Then */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DE15BEED2B264F56003800A3 /* PostImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		DE15BEEF2B266742003800A3 /* GetPostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPostModel.swift; sourceTree = "<group>"; };
+		DE15BEFB2B2772C2003800A3 /* PostProductID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostProductID.swift; sourceTree = "<group>"; };
 		DE3A00172B1A0EEE00C408C1 /* DatePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerViewController.swift; sourceTree = "<group>"; };
 		DE3AFF8F2B14C3C300C408C1 /* PassWordSignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassWordSignUpViewController.swift; sourceTree = "<group>"; };
 		DE3AFF912B14D5C700C408C1 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
@@ -67,6 +82,7 @@
 		DE3AFFF32B18AD5E00C408C1 /* SignupModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupModel.swift; sourceTree = "<group>"; };
 		DE3AFFF52B18BDD800C408C1 /* ErrorCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorCase.swift; sourceTree = "<group>"; };
 		DE447F5E2B0E5E7200B6EB31 /* EmailUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailUpViewController.swift; sourceTree = "<group>"; };
+		DE7F217B2B2B8BF00016EA0F /* Extension+KingFisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+KingFisher.swift"; sourceTree = "<group>"; };
 		DE99235C2B0E73C70048B705 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		DE99235E2B0E77150048B705 /* Extension+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIColor.swift"; sourceTree = "<group>"; };
 		DE99238D2B0F2CC60048B705 /* SecretKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretKeys.swift; sourceTree = "<group>"; };
@@ -91,7 +107,11 @@
 		DEF1D38E2B2055F400CDE246 /* TokenManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManger.swift; sourceTree = "<group>"; };
 		DEF1D3932B21881E00CDE246 /* UserDefaultsWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsWrapper.swift; sourceTree = "<group>"; };
 		DEF1D3972B21CD1F00CDE246 /* TokenAuthPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAuthPlugin.swift; sourceTree = "<group>"; };
-		DEF1D3992B21E1F900CDE246 /* RefreshModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshModel.swift; sourceTree = "<group>"; };
+		DEF1D3992B21E1F900CDE246 /* RefreshResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshResult.swift; sourceTree = "<group>"; };
+		DEF1D3D22B24C11A00CDE246 /* MainHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHomeViewController.swift; sourceTree = "<group>"; };
+		DEF1D3D52B24C12A00CDE246 /* MainHomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHomeViewModel.swift; sourceTree = "<group>"; };
+		DEF1D3DA2B24D6D800CDE246 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		DEF1D3E22B24E46F00CDE246 /* PostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,13 +119,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE9044712B3022BC009AB4CA /* Toast in Frameworks */,
 				DE3AFF7C2B10DD0900C408C1 /* RxCocoa in Frameworks */,
 				DEE81C8A2B0CDD8E0069AB2E /* Moya in Frameworks */,
+				DEF1D3E62B24EBF000CDE246 /* Then in Frameworks */,
 				DE3AFF7E2B10DD0900C408C1 /* RxRelay in Frameworks */,
+				DEF1D3E02B24E05E00CDE246 /* RxDataSources in Frameworks */,
 				DEE81C872B0CDD6B0069AB2E /* SnapKit in Frameworks */,
 				DEE81C8E2B0CDD8E0069AB2E /* RxMoya in Frameworks */,
 				DEE81C8C2B0CDD8E0069AB2E /* ReactiveMoya in Frameworks */,
 				DE3AFF802B10DD0900C408C1 /* RxSwift in Frameworks */,
+				DEF1D3DE2B24E05E00CDE246 /* Differentiator in Frameworks */,
 				DEE81C912B0CDDA00069AB2E /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -183,7 +207,8 @@
 				DE9923922B0F722B0048B705 /* ValidationEmailModel.swift */,
 				DE3AFFF32B18AD5E00C408C1 /* SignupModel.swift */,
 				DEF1D3892B1E36BD00CDE246 /* LoginModel.swift */,
-				DEF1D3992B21E1F900CDE246 /* RefreshModel.swift */,
+				DEF1D3992B21E1F900CDE246 /* RefreshResult.swift */,
+				DE15BEEF2B266742003800A3 /* GetPostModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -224,6 +249,8 @@
 		DEE81C822B0CDCD20069AB2E /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				DEF1D3D92B24D6BF00CDE246 /* Main */,
+				DEF1D3D12B24C0FA00CDE246 /* MainHome */,
 				DE3AFFE72B18620200C408C1 /* CustomView */,
 				DE3AFFEA2B18644600C408C1 /* Login */,
 				DE447F5D2B0E571A00B6EB31 /* SignUp */,
@@ -265,6 +292,7 @@
 				DEE81CA52B0CE87A0069AB2E /* Extension+UIView.swift */,
 				DE99235E2B0E77150048B705 /* Extension+UIColor.swift */,
 				DEF1D3832B1DD98B00CDE246 /* Extension+UIViewController.swift */,
+				DE7F217B2B2B8BF00016EA0F /* Extension+KingFisher.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -281,8 +309,44 @@
 			isa = PBXGroup;
 			children = (
 				DEF1D3932B21881E00CDE246 /* UserDefaultsWrapper.swift */,
+				DE15BEFB2B2772C2003800A3 /* PostProductID.swift */,
 			);
 			path = Helper;
+			sourceTree = "<group>";
+		};
+		DEF1D3D12B24C0FA00CDE246 /* MainHome */ = {
+			isa = PBXGroup;
+			children = (
+				DEF1D3E12B24E41B00CDE246 /* Cell */,
+				DEF1D3D42B24C11E00CDE246 /* ViewModel */,
+				DEF1D3D22B24C11A00CDE246 /* MainHomeViewController.swift */,
+			);
+			path = MainHome;
+			sourceTree = "<group>";
+		};
+		DEF1D3D42B24C11E00CDE246 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				DEF1D3D52B24C12A00CDE246 /* MainHomeViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		DEF1D3D92B24D6BF00CDE246 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				DEF1D3DA2B24D6D800CDE246 /* MainTabBarController.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		DEF1D3E12B24E41B00CDE246 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				DEF1D3E22B24E46F00CDE246 /* PostCollectionViewCell.swift */,
+				DE15BEED2B264F56003800A3 /* PostImageCollectionViewCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -310,6 +374,10 @@
 				DE3AFF7B2B10DD0900C408C1 /* RxCocoa */,
 				DE3AFF7D2B10DD0900C408C1 /* RxRelay */,
 				DE3AFF7F2B10DD0900C408C1 /* RxSwift */,
+				DEF1D3DD2B24E05E00CDE246 /* Differentiator */,
+				DEF1D3DF2B24E05E00CDE246 /* RxDataSources */,
+				DEF1D3E52B24EBF000CDE246 /* Then */,
+				DE9044702B3022BC009AB4CA /* Toast */,
 			);
 			productName = LookMyPets;
 			productReference = DEE81C6B2B0CDC660069AB2E /* LookMyPets.app */;
@@ -344,6 +412,9 @@
 				DEE81C882B0CDD8E0069AB2E /* XCRemoteSwiftPackageReference "Moya" */,
 				DEE81C8F2B0CDDA00069AB2E /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				DE3AFF7A2B10DD0900C408C1 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				DEF1D3DC2B24E05D00CDE246 /* XCRemoteSwiftPackageReference "RxDataSources" */,
+				DEF1D3E42B24EBF000CDE246 /* XCRemoteSwiftPackageReference "Then" */,
+				DE90446F2B3022BC009AB4CA /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 			);
 			productRefGroup = DEE81C6C2B0CDC660069AB2E /* Products */;
 			projectDirPath = "";
@@ -376,6 +447,7 @@
 				DE9923912B0F6B080048B705 /* Router.swift in Sources */,
 				DE3AFFB32B170C2D00C408C1 /* PassWordSignUpViewModel.swift in Sources */,
 				DEE81C732B0CDC670069AB2E /* LoginViewController.swift in Sources */,
+				DE7F217C2B2B8BF00016EA0F /* Extension+KingFisher.swift in Sources */,
 				DE9923962B0F78FE0048B705 /* APIManger.swift in Sources */,
 				DEF1D3982B21CD1F00CDE246 /* TokenAuthPlugin.swift in Sources */,
 				DE447F5F2B0E5E7200B6EB31 /* EmailUpViewController.swift in Sources */,
@@ -383,12 +455,17 @@
 				DEF1D38F2B2055F500CDE246 /* TokenManger.swift in Sources */,
 				DEF1D38C2B1F1B7E00CDE246 /* LoginViewModel.swift in Sources */,
 				DE3AFFEC2B1864A600C408C1 /* GuideLabel.swift in Sources */,
+				DE15BEF02B266742003800A3 /* GetPostModel.swift in Sources */,
 				DEF1D3842B1DD98B00CDE246 /* Extension+UIViewController.swift in Sources */,
 				DEF1D3942B21881E00CDE246 /* UserDefaultsWrapper.swift in Sources */,
+				DEF1D3E32B24E46F00CDE246 /* PostCollectionViewCell.swift in Sources */,
 				DE99235F2B0E77150048B705 /* Extension+UIColor.swift in Sources */,
 				DEF1D3862B1DDF8C00CDE246 /* SignUpCompletionViewController.swift in Sources */,
+				DEF1D3DB2B24D6D800CDE246 /* MainTabBarController.swift in Sources */,
+				DEF1D3D32B24C11A00CDE246 /* MainHomeViewController.swift in Sources */,
 				DE3AFFF62B18BDD800C408C1 /* ErrorCase.swift in Sources */,
 				DE3AFFB52B1787D300C408C1 /* UserInfoUpViewController.swift in Sources */,
+				DE15BEEE2B264F56003800A3 /* PostImageCollectionViewCell.swift in Sources */,
 				DEE81CA12B0CE2000069AB2E /* BaseViewController.swift in Sources */,
 				DE9923932B0F722B0048B705 /* ValidationEmailModel.swift in Sources */,
 				DE3AFF902B14C3C300C408C1 /* PassWordSignUpViewController.swift in Sources */,
@@ -396,8 +473,10 @@
 				DE3AFFEE2B1865C300C408C1 /* NextButton.swift in Sources */,
 				DEE81CA62B0CE87A0069AB2E /* Extension+UIView.swift in Sources */,
 				DE3AFF962B14D6EB00C408C1 /* EmailUpViewModel.swift in Sources */,
-				DEF1D39A2B21E1F900CDE246 /* RefreshModel.swift in Sources */,
+				DEF1D39A2B21E1F900CDE246 /* RefreshResult.swift in Sources */,
 				DEE81CA32B0CE2080069AB2E /* BaseView.swift in Sources */,
+				DEF1D3D62B24C12A00CDE246 /* MainHomeViewModel.swift in Sources */,
+				DE15BEFC2B2772C2003800A3 /* PostProductID.swift in Sources */,
 				DEE81C6F2B0CDC660069AB2E /* AppDelegate.swift in Sources */,
 				DEF1D38A2B1E36BD00CDE246 /* LoginModel.swift in Sources */,
 				DE3AFFF02B186A5800C408C1 /* GuideTextFieldVStack.swift in Sources */,
@@ -633,6 +712,14 @@
 				minimumVersion = 6.6.0;
 			};
 		};
+		DE90446F2B3022BC009AB4CA /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scalessec/Toast-Swift";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 5.0.1;
+			};
+		};
 		DEE81C852B0CDD6B0069AB2E /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -657,6 +744,22 @@
 				minimumVersion = 7.10.0;
 			};
 		};
+		DEF1D3DC2B24E05D00CDE246 /* XCRemoteSwiftPackageReference "RxDataSources" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxDataSources.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 5.0.2;
+			};
+		};
+		DEF1D3E42B24EBF000CDE246 /* XCRemoteSwiftPackageReference "Then" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/devxoul/Then.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -674,6 +777,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DE3AFF7A2B10DD0900C408C1 /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxSwift;
+		};
+		DE9044702B3022BC009AB4CA /* Toast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DE90446F2B3022BC009AB4CA /* XCRemoteSwiftPackageReference "Toast-Swift" */;
+			productName = Toast;
 		};
 		DEE81C862B0CDD6B0069AB2E /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -699,6 +807,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DEE81C8F2B0CDDA00069AB2E /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		DEF1D3DD2B24E05E00CDE246 /* Differentiator */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DEF1D3DC2B24E05D00CDE246 /* XCRemoteSwiftPackageReference "RxDataSources" */;
+			productName = Differentiator;
+		};
+		DEF1D3DF2B24E05E00CDE246 /* RxDataSources */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DEF1D3DC2B24E05D00CDE246 /* XCRemoteSwiftPackageReference "RxDataSources" */;
+			productName = RxDataSources;
+		};
+		DEF1D3E52B24EBF000CDE246 /* Then */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DEF1D3E42B24EBF000CDE246 /* XCRemoteSwiftPackageReference "Then" */;
+			productName = Then;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
