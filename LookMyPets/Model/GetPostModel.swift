@@ -28,7 +28,7 @@ struct GetPostData: Decodable {
     let time: String
     let _id: String
     let creator: CreatorInfo
-    let content: String
+    let content: String?
     let content1: String?
     let product_id: String
 }
