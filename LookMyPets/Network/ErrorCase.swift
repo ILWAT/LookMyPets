@@ -7,12 +7,12 @@
 
 import Foundation
 
-protocol ErrorMessagesProtocol: Error {
+protocol SeSACErrorCase: Error {
     var errorMessage: String { get }
 }
 
 enum ErrorCase{
-    enum LocalError: ErrorMessagesProtocol{
+    enum LocalError: SeSACErrorCase{
         case decodeError
         
         var errorMessage: String {
@@ -23,7 +23,7 @@ enum ErrorCase{
         }
     }
     
-    enum CommonError: Int, ErrorMessagesProtocol {
+    enum CommonError: Int, SeSACErrorCase {
         case noneSeSACKey = 420
         case overRequest = 429
         case notExistURL = 444
@@ -43,7 +43,7 @@ enum ErrorCase{
         }
     }
 
-    enum FetchValidationEmailError: Int, ErrorMessagesProtocol  {
+    enum FetchValidationEmailError: Int, SeSACErrorCase  {
         case noneBody = 400
         case notInvalid = 409
         
@@ -58,7 +58,7 @@ enum ErrorCase{
     }
 
 
-    enum FetchSignupError: Int, ErrorMessagesProtocol  {
+    enum FetchSignupError: Int, SeSACErrorCase  {
         case existUser = 409
         case noneBody = 400
         
@@ -72,7 +72,7 @@ enum ErrorCase{
         }
     }
 
-    enum FetchLoginError: Int, ErrorMessagesProtocol  {
+    enum FetchLoginError: Int, SeSACErrorCase  {
         case noneBody = 400
         case checkAccount = 401
         
@@ -86,7 +86,7 @@ enum ErrorCase{
         }
     }
 
-    enum fetchRefreshError: Int, ErrorMessagesProtocol {
+    enum fetchRefreshError: Int, SeSACErrorCase {
         case forbidden = 401
         case notValidToken = 403
         case notExpire = 409
@@ -106,7 +106,7 @@ enum ErrorCase{
         }
     }
     
-    enum getPostError: Int, ErrorMessagesProtocol {
+    enum getPostError: Int, SeSACErrorCase {
         case wrongRequest = 400
         case notValidToken = 401
         case forbidden = 403
@@ -126,7 +126,7 @@ enum ErrorCase{
         }
     }
     
-    enum ContentTestError: Int, ErrorMessagesProtocol {
+    enum ContentTestError: Int, SeSACErrorCase {
         case unValidToken = 401
         case Forbidden = 403
         case expireToekn = 419
