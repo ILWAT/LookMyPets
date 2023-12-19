@@ -13,6 +13,7 @@ import RxCocoa
 import RxSwift
 import Then
 
+
 struct PostImageSection: SectionModelType {
     var items: [String]
     
@@ -36,6 +37,7 @@ final class PostCollectionViewCell: UICollectionViewCell {
         $0.setTitle("사용자", for: .normal)
         var config = UIButton.Configuration.plain()
         config.titleAlignment = .leading
+        
         config.baseForegroundColor = .label
         $0.configuration = config
         $0.setContentHuggingPriority(.defaultLow, for: .horizontal)
@@ -55,11 +57,10 @@ final class PostCollectionViewCell: UICollectionViewCell {
         view.axis = .horizontal
         view.spacing = 3
         view.alignment = .fill
-        view.distribution = .fillProportionally
+        view.distribution = .fill
     }
     
     lazy var imageCollectionView = UICollectionView(frame: .zero, collectionViewLayout: setCollectionViewLayout()).then{
-        $0.delegate = self
         $0.register(PostImageCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: PostImageCollectionViewCell.self))
         $0.decelerationRate = .fast
         $0.isPagingEnabled = false
@@ -133,7 +134,7 @@ final class PostCollectionViewCell: UICollectionViewCell {
     
     //MARK: - RxProperties
     private let postData = PublishRelay<GetPostData>()
-    private let imageData = PublishSubject<[String]>()
+    private let imageData = PublishRelay<[String]>()
     
     var disposeBag = DisposeBag()
     
@@ -159,7 +160,6 @@ final class PostCollectionViewCell: UICollectionViewCell {
     //MARK: - Configure UI
     private func configureHierarchy() {
         self.contentView.addSubviews([topHStackView, imageCollectionView, interactionStackView, likeCountButton, imageControlBar, bookmarkButton, postLabel])
-        imageCollectionView.delegate = self
     }
     
     private func setConstraints(){
@@ -220,28 +220,36 @@ final class PostCollectionViewCell: UICollectionViewCell {
             .asDriver(onErrorJustReturn: GetPostData(likes: [], image: [], hashTags: [], comments: [], time: "", _id: "", creator: CreatorInfo(_id: "", nick: "", profile: ""), content: "", content1: "", product_id: ""))
             .drive(with: self) { owner, post in
                 if let profileImage = post.creator.profile{
-                    print(SecretKeys.SeSAC_ServerBaseURL+"/\(post.creator.profile)")
-                    owner.profileImage.kf.setImageWithAuthHeaders(with: URL(string: SecretKeys.SeSAC_ServerBaseURL+"/\(post.creator.profile)"))
+                    let itemSize = owner.profileImage.bounds.size
+                    
+                    owner.profileImage.kf.setImageWithAuthHeaders(with: URL(string: SecretKeys.SeSAC_ServerBaseURL+"/\(profileImage)"),
+                                                                  placeholder: UIImage(systemName: "person"),
+                                                                  options: [
+                                                                    .processor(DownsamplingImageProcessor(size: itemSize)),
+                                                                    .transition(.fade(1)),
+                                                                    .cacheOriginalImage,
+                                                                    .retryStrategy(DelayRetryStrategy(maxRetryCount: 3, retryInterval: .seconds(1)))
+                                                                  ]
+                    )
                 }
                 owner.profileName.setTitle(post.creator.nick, for: .normal)
                 owner.postLabel.text = post.content
                 owner.likeCountButton.setTitle("좋아요 \(post.likes.count)개", for: .normal)
                 owner.imageControlBar.numberOfPages = post.image.count
-                owner.imageData.onNext(post.image)
+                owner.imageData.accept(post.image)
             }
             .disposed(by: disposeBag)
         
         imageData
             .bind(to: imageCollectionView.rx.items(cellIdentifier: String(describing: PostImageCollectionViewCell.self), cellType: PostImageCollectionViewCell.self)) { (row, element, cell) in
-                print("emit")
-                cell.postImage.kf.setImageWithAuthHeaders(with: URL(string: SecretKeys.SeSAC_ServerBaseURL+"/\(element)"))
+                cell.showImage(element: element)
             }
             .disposed(by: disposeBag)
         
         imageControlBar
             .rx.controlEvent(.valueChanged)
-            .flatMapLatest({ _ in
-                Observable.just(self.imageControlBar.currentPage)
+            .map({ _ in
+                self.imageControlBar.currentPage
             })
             .bind(with: self) { owner, value in
                 guard let layout = self.imageCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
@@ -251,34 +259,33 @@ final class PostCollectionViewCell: UICollectionViewCell {
                 owner.imageCollectionView.rx.contentOffset.onNext(CGPoint(x: CGFloat(value) * itemSizeWithSpacing, y: 0))
             }
             .disposed(by: disposeBag)
-    }
-    
-}
-
-extension PostCollectionViewCell: UICollectionViewDelegate, UIPageControlProgressDelegate {
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         
-        guard let layout = self.imageCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
         
-        let itemSizeWithSpacing = layout.itemSize.width + layout.minimumInteritemSpacing //여백을 포함한 아이템 너비 구하기
-        
-        let estimateItemIndex = scrollView.contentOffset.x / itemSizeWithSpacing // 현재 좌표가 어느 아이템을 보여주고 있는지 계산
-        
-        let index: Int
-        
-        if velocity.x > 0{
-            index = Int(ceil(estimateItemIndex))
-        } else if velocity.x < 0 {
-            index = Int(floor(estimateItemIndex))
-        } else {
-            index = Int(round(estimateItemIndex))
-        }
-        
-        let itemPoint = CGFloat(index) * itemSizeWithSpacing
-        
-        self.imageControlBar.rx.currentPage.onNext(index)
-        
-        targetContentOffset.pointee = CGPoint(x: itemPoint, y: 0)
+        imageCollectionView.rx.willEndDragging
+            .subscribe(with: self) { owner, delegateParameter in
+                guard let layout = owner.imageCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+                
+                let itemSizeWithSpacing = layout.itemSize.width + layout.minimumInteritemSpacing //여백을 포함한 아이템 너비 구하기
+                
+                let estimateItemIndex = owner.imageCollectionView.contentOffset.x / itemSizeWithSpacing // 현재 좌표가 어느 아이템을 보여주고 있는지 계산
+                
+                let index: Int
+                
+                if delegateParameter.velocity.x > 0{
+                    index = Int(ceil(estimateItemIndex))
+                } else if delegateParameter.velocity.x < 0 {
+                    index = Int(floor(estimateItemIndex))
+                } else {
+                    index = Int(round(estimateItemIndex))
+                }
+                
+                let itemPoint = CGFloat(index) * itemSizeWithSpacing
+                
+                self.imageControlBar.rx.currentPage.onNext(index)
+                
+                delegateParameter.targetContentOffset.pointee = CGPoint(x: itemPoint, y: 0)
+            }
+            .disposed(by: disposeBag)
     }
     
 }

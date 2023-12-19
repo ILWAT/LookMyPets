@@ -34,10 +34,12 @@ final class PostImageCollectionViewCell: UICollectionViewCell{
     //MARK: - Configure UI
     private func configureHierarchy() {
         self.contentView.addSubview(postImage)
-        self.translatesAutoresizingMaskIntoConstraints = true
     }
     
     private func setConstraints(){
+        contentView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         postImage.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -46,7 +48,6 @@ final class PostImageCollectionViewCell: UICollectionViewCell{
     //MARK: - Helper
     func showImage(element: String){
         let itemSize = self.bounds.size
-        print(itemSize)
         postImage.kf.setImageWithAuthHeaders(
             with: URL(string: SecretKeys.SeSAC_ServerBaseURL+"/\(element)"),
             options: [
