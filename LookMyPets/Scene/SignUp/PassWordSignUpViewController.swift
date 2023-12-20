@@ -146,7 +146,3 @@ final class PassWordSignUpViewController: BaseViewController {
         }
     }
 }
-
-#Preview {
-    PassWordSignUpViewController()
-}

@@ -20,6 +20,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         window?.rootViewController = UINavigationController(rootViewController: LoginViewController())
         window?.makeKeyAndVisible()
+        
+        if let screenWidth = window?.screen.bounds.width, let screenHeight = window?.screen.bounds.height{
+            UserDefaults.standard.setValue(screenWidth, forKey: "ScreenWidth")
+            UserDefaults.standard.setValue(screenHeight, forKey: "ScreenHeight")
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

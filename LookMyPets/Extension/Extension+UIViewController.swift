@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Toast
 
 extension UIViewController {
     func makeDefaultAlert(alertTitle: String, alertMessage: String, okTitle: String, completion: @escaping (UIAlertAction)->Void, cancelAction: @escaping (UIAlertAction)->Void){
@@ -18,5 +19,9 @@ extension UIViewController {
         }
         
         self.present(alert, animated: true)
+    }
+    
+    func makeGeneralToast(message: String = "알 수 없는 에러가 발생했습니다.", title: String? = nil, image: UIImage? = nil, completion: ((Bool) -> Void)? = nil) {
+        self.view.makeToast(message, title: title, image: image, completion: completion)
     }
 }

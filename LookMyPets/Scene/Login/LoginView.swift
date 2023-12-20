@@ -18,18 +18,13 @@ final class LoginView: BaseView {
         return view
     }()
     
-    let idTextField = {
-        let view = UITextField()
-        view.borderStyle = .roundedRect
-        view.placeholder = "E-mail"
-        view.returnKeyType = .next
-        return view
-    }()
+    let idTextField = GuideTextFieldVStack(placeHolder: "E-mail", IsSecure: false, ClearButton: true, GuideLabelHidden: true)
     
     let pwTextField = {
         let view = UITextField()
         view.borderStyle = .roundedRect
         view.placeholder = "PassWord"
+        view.isSecureTextEntry = true
         view.returnKeyType = .done
         return view
     }()
@@ -68,7 +63,7 @@ final class LoginView: BaseView {
         let view = UIStackView()
         view.axis = .vertical
         view.spacing = 10
-        view.distribution = .fillEqually
+        view.distribution = .equalSpacing
         view.alignment = .fill
         view.addArrangedSubview(idTextField)
         view.addArrangedSubview(pwTextField)

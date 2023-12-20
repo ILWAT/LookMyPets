@@ -80,7 +80,7 @@ final class EmailUpViewModel: ViewModelType {
                 (self?.isValidEmail(email) ?? false)
             })
             .flatMapLatest({ email in
-                APIManger.shared.requestValidEmail(email: ValidationEmail(email: email))
+                APIManger.shared.requestValidEmail(email: ValidationEmailBodyModel(email: email))
             })
             .catch({ error in
                 return Observable<Result<ValidationEmailResult, Error>>.just(.failure(error))
@@ -96,11 +96,11 @@ final class EmailUpViewModel: ViewModelType {
                     validChecked.accept(false)
                     isHiddenError.accept(false)
                     
-                    if let commonError = error as? CommonError {
+                    if let commonError = error as? ErrorCase.CommonError {
                         errorMessageText.accept(commonError.errorMessage)
                         print(commonError.errorMessage)
-                    } else if let fetchError = error as? FetchValidationEmailError {
-                        errorMessageText.accept(fetchError.getMessage)
+                    } else if let fetchError = error as? ErrorCase.FetchValidationEmailError {
+                        errorMessageText.accept(fetchError.errorMessage)
                     } else {
                         errorMessageText.accept("알 수 없는 에러가 발생했습니다.")
                     }

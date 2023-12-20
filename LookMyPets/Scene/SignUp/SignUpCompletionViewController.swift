@@ -86,8 +86,3 @@ final class SignUpCompletionViewController: BaseViewController {
     
     
 }
-
-
-#Preview{
-    SignUpCompletionViewController()
-}
